@@ -7,7 +7,7 @@ import elsys.A11.project10.game.input.KeyHandler;
 public class Player extends Mob {
 	private KeyHandler input;
 	private int anim = 0;
-	private boolean walking = false;
+	public boolean walking = false;
 
 	public Player(int x, int y, KeyHandler input) {
 		this.x = x;
@@ -17,15 +17,20 @@ public class Player extends Mob {
 
 	public void tick() {
 		int xa = 0, ya = 0;
-		int offset = 1;
-		if (anim < 20)
+		int offset = 3;
+		if (anim < 20000)
 			anim++;
 		else
 			anim = 0;
+	//	System.out.println(anim);
 		if (input.isUp()) ya -= offset;
 		if (input.isDown()) ya += offset;
 		if (input.isRight()) xa += offset;
 		if (input.isLeft()) xa -= offset;
+		if (input.isSpace()) {
+			hp = 100;
+			System.out.println("You are Full  ");
+		}
 		if (xa != 0 || ya != 0) {
 			move(xa, ya);
 			walking = true;
@@ -37,8 +42,9 @@ public class Player extends Mob {
 	
 
 	public void render(Screen screen) {
-		boolean pace = anim % 20 > 10;
+		boolean pace = anim % 20 > 8;
 		if (walking) {
+			
 			if (direction == 4) {
 				if (pace)
 					screen.renderPlayer(x, y, Sprite.playerMoveUp, false, false);
@@ -69,7 +75,12 @@ public class Player extends Mob {
 			if (direction == 2) screen.renderPlayer(x, y, Sprite.playerSideStill, true, false);
 			if (direction == 3) screen.renderPlayer(x, y, Sprite.playerFrontStill, true, false);
 			if (direction == 4) screen.renderPlayer(x, y, Sprite.playerBackStill, false, false);
+			if (hp == 0) {
+				screen.renderPlayer(x, y, Sprite.playerDead, false, false);
+				
 
+
+			}
 		}
 	}
 	

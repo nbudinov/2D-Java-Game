@@ -10,6 +10,11 @@ public class Sprite {
 	public static Sprite stone = new Sprite(16, 2, 0, SpriteSheet.sheet);
 	public static Sprite flower = new Sprite(16, 1, 0, SpriteSheet.sheet);
 	public static Sprite voidSprite = new Sprite(16, 0xff77ff);
+	public static Sprite wall = new Sprite(16, 0, 1, SpriteSheet.sheet);
+	public static Sprite lava = new Sprite(16, 1, 1, SpriteSheet.sheet);
+	public static Sprite ground = new Sprite(16, 2, 1, SpriteSheet.sheet );
+	
+	public static Sprite playerDead = new Sprite(16, 6, 15, SpriteSheet.sheet);
 	public static Sprite playerMoveUp = new Sprite(16, 0, 15, SpriteSheet.sheet);
 	public static Sprite playerMoveDown = new Sprite(16, 1, 15, SpriteSheet.sheet);
 	public static Sprite playerSideStill = new Sprite(16, 2, 15, SpriteSheet.sheet);

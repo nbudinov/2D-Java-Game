@@ -3,6 +3,7 @@ package elsys.A11.project10.game;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Frame;
@@ -12,11 +13,17 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 import elsys.A11.project10.game.entity.mob.Player;
 import elsys.A11.project10.game.graphics.Screen;
 import elsys.A11.project10.game.input.KeyHandler;
 import elsys.A11.project10.game.level.Level;
+import elsys.A11.project10.game.level.LoadLvl;
+import elsys.A11.project10.game.entity.mob.Mob;
 
 public class Game extends Canvas implements Runnable {
 
@@ -37,7 +44,13 @@ public class Game extends Canvas implements Runnable {
 	private Screen screen;
 	private Level level;
 	private Player player;
+	
+	JPanel panel = new JPanel();
+	JLabel label = new JLabel(" Test ");
 
+
+	//public JTextField field = new JTextField();
+	
 	public synchronized void start() {
 		thread = new Thread(this, name);
 		thread.start();
@@ -57,9 +70,10 @@ public class Game extends Canvas implements Runnable {
 		frame = new JFrame(name);
 		screen = new Screen(width, height);
 		key = new KeyHandler();
-		level = new Level(width * scale, height * scale);
+		level = new LoadLvl("/level.png");
 		player = new Player(height * scale, height * scale, key);
-
+		player.init(level);
+		
 		addKeyListener(key);
 		displayFrame();
 	}
@@ -99,8 +113,8 @@ public class Game extends Canvas implements Runnable {
 	public int x, y = 0;
 
 	private void tick() {
-		// x++;
-		// y++;
+		x++;
+		y++;
 		key.tick();
 		player.tick();
 		if (key.isEsc()) System.exit(0);
@@ -109,6 +123,7 @@ public class Game extends Canvas implements Runnable {
 
 	private void render() {
 		BufferStrategy bs = getBufferStrategy();
+		
 		if (bs == null) {
 			createBufferStrategy(3);
 			return;
@@ -118,7 +133,7 @@ public class Game extends Canvas implements Runnable {
 			pixels[i] = screen.pixels[i];
 		}
 
-		level.render(player.x - screen.getWidth() / 2, player.y - screen.getHeight() / 2, screen);
+		level.render(    player.x - screen.getWidth() / 2, player.y - screen.getHeight() / 2,  screen); //    player.x - screen.getWidth() / 2, player.y - screen.getHeight() / 2
 		player.render(screen);
 
 		Graphics g = bs.getDrawGraphics();
@@ -126,7 +141,7 @@ public class Game extends Canvas implements Runnable {
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("Verdana", 0, 20));
-
+		//g.drawString("hp " + hp, 400, 400);
 		g.dispose();
 		bs.show();
 
@@ -134,10 +149,19 @@ public class Game extends Canvas implements Runnable {
 
 	private void displayFrame() {
 		// frame.setUndecorated(true);
+			
+		//frame.add(field, BorderLayout.SOUTH);
+		//JTextArea area = new JTextArea(50, 100);
+		//frame.add(area, BorderLayout.CENTER);
+		//panel.add(label);
+		//frame.add(panel);
+		
+		
+		
 		frame.setPreferredSize(new Dimension(width * scale, height * scale));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		frame.setLayout(new BorderLayout());
+		//frame.setLayout(new BorderLayout());
 		frame.add(this, BorderLayout.CENTER);
 		frame.pack();
 

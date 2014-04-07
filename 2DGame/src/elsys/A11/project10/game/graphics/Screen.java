@@ -27,7 +27,7 @@ public class Screen {
 
 			for (int x = 0; x < tile.sprite.getSIZE(); x++) {
 				int xa = x + xPos;
-				if (xa < -tile.sprite.getSIZE() || xa >= width || ya < 0 || ya >= height) break;
+				if (xa < -tile.sprite.getSIZE() || xa >= width || ya < 0 || ya >= height) break; 
 				if (xa < 0) xa = 0;
 				pixels[xa + ya * width] = tile.sprite.pixels[x + y * tile.sprite.getSIZE()];
 

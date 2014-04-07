@@ -6,7 +6,7 @@ import java.awt.event.KeyListener;
 public class KeyHandler implements KeyListener {
 
 	private boolean[] keys = new boolean[120];
-	public boolean up, down, left, right, esc;
+	public boolean up, down, left, right, esc, space;
 
 	public void tick() {
 		up = keys[KeyEvent.VK_UP] || keys[KeyEvent.VK_W];
@@ -14,6 +14,7 @@ public class KeyHandler implements KeyListener {
 		left = keys[KeyEvent.VK_LEFT] || keys[KeyEvent.VK_A];
 		down = keys[KeyEvent.VK_DOWN] || keys[KeyEvent.VK_S];
 		esc =  keys[KeyEvent.VK_ESCAPE];
+		space = keys[KeyEvent.VK_SPACE];
 	}
 
 	public void keyTyped(KeyEvent e) {
@@ -46,6 +47,10 @@ public class KeyHandler implements KeyListener {
 
 	public boolean isEsc() {
 		return esc;
+	}
+	
+	public boolean isSpace() {
+		return space;
 	}
 
 

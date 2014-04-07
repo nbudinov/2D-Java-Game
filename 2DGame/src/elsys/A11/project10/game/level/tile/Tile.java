@@ -7,12 +7,15 @@ public class Tile {
 	
 	public int x, y;
 	public Sprite sprite;
-	private boolean solid;
+	public boolean solid;
 	
 	public static Tile grass = new GrassTile(Sprite.grass);
 	public static Tile voidTile = new VoidTile(Sprite.voidSprite);
 	public static Tile stone = new StoneTile(Sprite.stone);
 	public static Tile flower = new GrassTile(Sprite.flower);
+	public static Tile wall = new WallTile(Sprite.wall);
+	public static Tile lava = new LavaTile(Sprite.lava);
+	public static Tile ground  = new GroundTile(Sprite.ground);
 	
 	public Tile(Sprite sprite){
 		this.sprite = sprite;
@@ -22,11 +25,13 @@ public class Tile {
 		
 	}
 	
-	public boolean isSolid(){
-		return this.solid;
+	public boolean solid(){
+		return false;
 	}
 	
-	public void setSolid(boolean solid){
-		this.solid = solid;
+	public boolean die() {
+		return false; 
 	}
+	
+	
 }
