@@ -19,18 +19,20 @@ public class Screen {
 	}
 
 
-	public void renderTile(int xPos, int yPos, Tile tile) {
+	public void renderTile(int xPos, int yPos, Sprite sprite) {
 		xPos -= xOffset;
 		yPos -= yOffset;
-		for (int y = 0; y < tile.sprite.getSIZE(); y++) {
+		for (int y = 0; y < sprite.getSIZE(); y++) {
 			int ya = (y + yPos);
 
-			for (int x = 0; x < tile.sprite.getSIZE(); x++) {
+			for (int x = 0; x < sprite.getSIZE(); x++) {
 				int xa = x + xPos;
-				if (xa < -tile.sprite.getSIZE() || xa >= width || ya < 0 || ya >= height) break; 
+				if (xa < -sprite.getSIZE() || xa >= width || ya < 0 || ya >= height) break; 
 				if (xa < 0) xa = 0;
-				pixels[xa + ya * width] = tile.sprite.pixels[x + y * tile.sprite.getSIZE()];
-
+				//pixels[xa + ya * width] = sprite.pixels[x + y * sprite.getSIZE()];
+				int colour = sprite.pixels[x + y * sprite.getSIZE()];
+				if (colour != 0xff000000) pixels[xa + ya * width] = colour;
+				
 			}
 		}
 	}
@@ -53,6 +55,9 @@ public class Screen {
 			}
 		}
 	}
+
+	
+
 
 	public void setOffset(int xOffset, int yOffset) {
 		this.xOffset = xOffset;

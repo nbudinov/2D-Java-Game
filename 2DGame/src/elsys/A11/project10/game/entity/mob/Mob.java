@@ -1,15 +1,21 @@
 package elsys.A11.project10.game.entity.mob;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import elsys.A11.project10.game.entity.Entity;
+import elsys.A11.project10.game.entity.Projectile;
 import elsys.A11.project10.game.graphics.Sprite;
 
 public abstract class Mob extends Entity {
 
 	protected Sprite sprite;
-	protected int direction = 1;
+	public int direction = 1;
 	protected boolean moving = false;
 	public int hp = 100;
 	public boolean dead = false;
+	
+	public List<Projectile> projectiles = new ArrayList<Projectile>();
 	
 	public void move(int xDir, int yDir) {
 		//hp = 100;
@@ -18,6 +24,10 @@ public abstract class Mob extends Entity {
 		if (xDir < 0) direction = 2;
 		if (yDir > 0) direction = 3;
 		if (yDir < 0) direction = 4;
+		if (yDir < 0 && xDir < 0) direction = 5;
+		if (yDir < 0 && xDir > 0) direction = 6;
+		if (yDir > 0 && xDir < 0) direction = 7;
+		if (yDir > 0 && xDir > 0) direction = 8;
 
 		if (!collision(xDir, 0)) {
 			x += xDir;
@@ -31,7 +41,7 @@ public abstract class Mob extends Entity {
 			//int i = 0;
 				hp = 0;
 			
-			System.out.println("TI PUKNA " + hp);
+			//System.out.println("TI PUKNA " + hp);
 			
 		}
 		
@@ -46,6 +56,12 @@ public abstract class Mob extends Entity {
 			if (level.getTile(xcor, ycor).die()) die = true;
 		}
 	return die;
+	}
+	
+	protected void shoot(int x, int ys, int direction){
+		Projectile p = new Projectile(x,y,direction);
+		level.projectiles.add(p);
+
 	}
 
 	private boolean collision(int xDir, int yDir) {

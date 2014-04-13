@@ -6,6 +6,7 @@ public class Sprite {
 	public int[] pixels;
 	private SpriteSheet sheet;
 
+	//Terrain
 	public static Sprite grass = new Sprite(16, 0, 0, SpriteSheet.sheet);
 	public static Sprite stone = new Sprite(16, 2, 0, SpriteSheet.sheet);
 	public static Sprite flower = new Sprite(16, 1, 0, SpriteSheet.sheet);
@@ -14,6 +15,7 @@ public class Sprite {
 	public static Sprite lava = new Sprite(16, 1, 1, SpriteSheet.sheet);
 	public static Sprite ground = new Sprite(16, 2, 1, SpriteSheet.sheet );
 	
+	//Player
 	public static Sprite playerDead = new Sprite(16, 6, 15, SpriteSheet.sheet);
 	public static Sprite playerMoveUp = new Sprite(16, 0, 15, SpriteSheet.sheet);
 	public static Sprite playerMoveDown = new Sprite(16, 1, 15, SpriteSheet.sheet);
@@ -21,6 +23,9 @@ public class Sprite {
 	public static Sprite playerFrontStill = new Sprite(16, 4, 15, SpriteSheet.sheet);
 	public static Sprite playerBackStill = new Sprite(16, 5, 15, SpriteSheet.sheet);
 	public static Sprite playerMoveSide = new Sprite(16, 3, 15, SpriteSheet.sheet);
+	
+	//Projectiles
+	public static Sprite projectile = new Sprite(16, 0, 2, SpriteSheet.sheet);
 
 	public Sprite(int size, int x, int y, SpriteSheet sheet) {
 		this.SIZE = size;

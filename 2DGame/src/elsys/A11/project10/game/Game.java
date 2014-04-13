@@ -110,13 +110,13 @@ public class Game extends Canvas implements Runnable {
 
 	}
 
-	public int x, y = 0;
+
 
 	private void tick() {
-		x++;
-		y++;
+
 		key.tick();
 		player.tick();
+		level.tick();
 		if (key.isEsc()) System.exit(0);
 
 	}
@@ -133,9 +133,10 @@ public class Game extends Canvas implements Runnable {
 			pixels[i] = screen.pixels[i];
 		}
 
+		
 		level.render(    player.x - screen.getWidth() / 2, player.y - screen.getHeight() / 2,  screen); //    player.x - screen.getWidth() / 2, player.y - screen.getHeight() / 2
 		player.render(screen);
-
+		
 		Graphics g = bs.getDrawGraphics();
 
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
@@ -148,7 +149,7 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	private void displayFrame() {
-		// frame.setUndecorated(true);
+		 //frame.setUndecorated(true);
 			
 		//frame.add(field, BorderLayout.SOUTH);
 		//JTextArea area = new JTextArea(50, 100);
@@ -161,13 +162,13 @@ public class Game extends Canvas implements Runnable {
 		frame.setPreferredSize(new Dimension(width * scale, height * scale));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		//frame.setLayout(new BorderLayout());
+		frame.setLayout(new BorderLayout());
 		frame.add(this, BorderLayout.CENTER);
 		frame.pack();
 
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
-		// frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		//frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setVisible(true);
 
 	}

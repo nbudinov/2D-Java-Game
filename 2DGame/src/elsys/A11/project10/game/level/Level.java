@@ -1,17 +1,23 @@
 package elsys.A11.project10.game.level;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
+import elsys.A11.project10.game.entity.Projectile;
+import elsys.A11.project10.game.entity.mob.Mob;
 import elsys.A11.project10.game.graphics.Screen;
 import elsys.A11.project10.game.level.tile.Tile;
 
 public class Level {
 	
 //	Tile[] tiles;
-	private static final Random random = new Random();
+	
+	public static final Random random = new Random();
 	protected int width, height;
 	protected int[] tilesIn;
 	protected int[] tiles;
+	public List<Projectile> projectiles = new ArrayList<Projectile>();
 		
 	public Level(int width, int height) {
 		this.width = width;
@@ -33,32 +39,16 @@ public class Level {
 	protected void generateLevel() {
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
-			/*	if(x > 20 && x < 40 && y > 15 && y < 40) {
-					if(x > 20 && x < 22){
-						tiles[x + y * width] = 29;
-					}
-					else
-					if(y > 15 && y < 17) {
-						tiles[x + y * width] = 29;	
-					}
-					else 
-					if( x > 38 && x < 40  )	{
-						tiles[x + y * width] = 29;
-					}
-					else
-					if(y > 38 && y < 40 && x < 36) {
-						tiles[x + y * width] = 29;						
-					}
-					else
-					tiles[x + y * width] = 23;
-				}
-				else
-			*/	
 				tilesIn[x + y * width] = random.nextInt(10);
 			}
 		}
 	}
 
+	public void tick(){
+		for (int i= 0 ; i < projectiles.size(); i++){
+			projectiles.get(i).tick();
+		}
+	}
 
 	public void render(int xScroll, int yScroll, Screen screen) {
 		screen.setOffset(xScroll, yScroll);
@@ -73,8 +63,11 @@ public class Level {
 				
 			}
 		}
+		
+		for (int i= 0 ; i < projectiles.size(); i++){
+			projectiles.get(i).render(screen);
+		}
 	}
-
 	public Tile getTile(int x, int y) {
 	//	System.out.println(" X = " + x + " Y = " + y  + " W = " + width + " H = " + height);
 		if (x < 0 || y < 0 || x >= width || y >= height ) return Tile.voidTile;
@@ -86,5 +79,6 @@ public class Level {
 		//if (tiles[x + y * width] == ) return Tile.ground;
 		return Tile.grass;
 	}
+	
 	
 }

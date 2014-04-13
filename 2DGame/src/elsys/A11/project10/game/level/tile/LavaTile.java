@@ -11,7 +11,7 @@ public class LavaTile extends Tile
 	}
 	
 	public void render(int x, int y, Screen screen)	{
-		screen.renderTile(x * 16, y * 16, this);
+		screen.renderTile(x * 16, y * 16, Sprite.lava);
 	}
 	
 	public boolean die()	{
