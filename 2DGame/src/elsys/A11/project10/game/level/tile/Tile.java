@@ -12,7 +12,7 @@ public class Tile {
 	public static Tile grass = new GrassTile(Sprite.grass);
 	public static Tile voidTile = new VoidTile(Sprite.voidSprite);
 	public static Tile stone = new StoneTile(Sprite.stone);
-	public static Tile flower = new GrassTile(Sprite.flower);
+	public static Tile flower = new FlowerTile(Sprite.flower);
 	public static Tile wall = new WallTile(Sprite.wall);
 	public static Tile lava = new LavaTile(Sprite.lava);
 	public static Tile ground  = new GroundTile(Sprite.ground);
@@ -32,6 +32,4 @@ public class Tile {
 	public boolean die() {
 		return false; 
 	}
-	
-	
 }

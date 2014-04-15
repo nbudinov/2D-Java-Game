@@ -12,6 +12,7 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -22,7 +23,6 @@ import elsys.A11.project10.game.entity.mob.Player;
 import elsys.A11.project10.game.graphics.Screen;
 import elsys.A11.project10.game.input.KeyHandler;
 import elsys.A11.project10.game.level.Level;
-import elsys.A11.project10.game.level.LoadLvl;
 import elsys.A11.project10.game.entity.mob.Mob;
 
 public class Game extends Canvas implements Runnable {
@@ -44,12 +44,8 @@ public class Game extends Canvas implements Runnable {
 	private Screen screen;
 	private Level level;
 	private Player player;
-	
-	JPanel panel = new JPanel();
-	JLabel label = new JLabel(" Test ");
+	private JFrame butt;
 
-
-	//public JTextField field = new JTextField();
 	
 	public synchronized void start() {
 		thread = new Thread(this, name);
@@ -70,8 +66,8 @@ public class Game extends Canvas implements Runnable {
 		frame = new JFrame(name);
 		screen = new Screen(width, height);
 		key = new KeyHandler();
-		level = new LoadLvl("/level.png");
-		player = new Player(height * scale, height * scale, key);
+		level = new Level("/level.png");
+		player = new Player(40 * 16, 60 * 16, key);
 		player.init(level);
 		
 		addKeyListener(key);
@@ -133,8 +129,7 @@ public class Game extends Canvas implements Runnable {
 			pixels[i] = screen.pixels[i];
 		}
 
-		
-		level.render(    player.x - screen.getWidth() / 2, player.y - screen.getHeight() / 2,  screen); //    player.x - screen.getWidth() / 2, player.y - screen.getHeight() / 2
+		level.render( player.x - screen.getWidth() / 2, player.y - screen.getHeight() / 2,  screen); //    player.x - screen.getWidth() / 2, player.y - screen.getHeight() / 2
 		player.render(screen);
 		
 		Graphics g = bs.getDrawGraphics();
@@ -154,15 +149,12 @@ public class Game extends Canvas implements Runnable {
 		//frame.add(field, BorderLayout.SOUTH);
 		//JTextArea area = new JTextArea(50, 100);
 		//frame.add(area, BorderLayout.CENTER);
-		//panel.add(label);
 		//frame.add(panel);
-		
-		
 		
 		frame.setPreferredSize(new Dimension(width * scale, height * scale));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		frame.setLayout(new BorderLayout());
+		//frame.setLayout(new BorderLayout());
 		frame.add(this, BorderLayout.CENTER);
 		frame.pack();
 

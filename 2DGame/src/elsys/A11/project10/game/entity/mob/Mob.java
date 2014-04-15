@@ -19,7 +19,7 @@ public abstract class Mob extends Entity {
 	
 	public void move(int xDir, int yDir) {
 		//hp = 100;
-	//	System.out.println(" x = " + x + " y = " + y);
+		//System.out.println(" x = " + x + " y = " + y);
 		if (xDir > 0) direction = 1;
 		if (xDir < 0) direction = 2;
 		if (yDir > 0) direction = 3;
@@ -29,22 +29,37 @@ public abstract class Mob extends Entity {
 		if (yDir > 0 && xDir < 0) direction = 7;
 		if (yDir > 0 && xDir > 0) direction = 8;
 
-		if (!collision(xDir, 0)) {
-			x += xDir;
-		}
+		if(!dead) {
+			if (!collision(xDir, 0)) {
+				x += xDir;
+			}
 		
-		if (!collision(0, yDir)) {
-			y += yDir;
+			if (!collision(0, yDir)) {
+				y += yDir;
+			}
 		}
-		
 		if(dieColl(xDir, yDir)) {
-			//int i = 0;
-				hp = 0;
-			
-			//System.out.println("TI PUKNA " + hp);
-			
+			int i = 0;
+				while(i <= 7200) {
+					i += 1;
+					if(i == 7200 ) {
+						if(hp >= 0) {
+							reduceHp();
+						}
+						else
+							dead = true;
+					}
+				}
+			}	
 		}
-		
+	
+	
+	public void GameOver() {
+	}
+	
+	public void reduceHp() {
+		hp -= 20;
+		System.out.println( " HP = " + hp );
 	}
 
 	public boolean dieColl(int xDir, int yDir) {

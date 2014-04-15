@@ -1,8 +1,12 @@
 package elsys.A11.project10.game.level;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import javax.imageio.ImageIO;
 
 import elsys.A11.project10.game.entity.Projectile;
 import elsys.A11.project10.game.entity.mob.Mob;
@@ -11,7 +15,6 @@ import elsys.A11.project10.game.level.tile.Tile;
 
 public class Level {
 	
-//	Tile[] tiles;
 	
 	public static final Random random = new Random();
 	protected int width, height;
@@ -24,25 +27,13 @@ public class Level {
 		this.height = height;
 		tilesIn = new int[width * height];
 
-		generateLevel();
+	//	generateLevel();
 	}
 	
 	public Level(String path) {
 		loadLevel(path);
-		generateLevel();
-
-	}
-	
-	public void loadLevel(String path) {
 	}
 
-	protected void generateLevel() {
-		for (int y = 0; y < height; y++) {
-			for (int x = 0; x < width; x++) {
-				tilesIn[x + y * width] = random.nextInt(10);
-			}
-		}
-	}
 
 	public void tick(){
 		for (int i= 0 ; i < projectiles.size(); i++){
@@ -50,6 +41,22 @@ public class Level {
 		}
 	}
 
+	public void loadLevel(String path) {
+		try {
+			BufferedImage image = ImageIO.read(Level.class.getResource(path));
+			int w = width = image.getWidth();
+			int h = height = image.getHeight();
+		//	System.out.println(" W =" + width + " H = " + height);	
+			tiles = new int[w * h];
+			
+			image.getRGB(0, 0, w, h, tiles, 0, w);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println("Load error level");
+		}
+		
+	} 
+	
 	public void render(int xScroll, int yScroll, Screen screen) {
 		screen.setOffset(xScroll, yScroll);
 		int x0 = xScroll / 16;
@@ -59,6 +66,7 @@ public class Level {
 
 		for (int y = y0; y < y1; y++) {
 			for (int x = x0; x < x1; x++) {
+				//System.out.println("y = " + y0 + " x = " + x0 );
 				getTile(x, y).render(x, y, screen);
 				
 			}
@@ -67,16 +75,18 @@ public class Level {
 		for (int i= 0 ; i < projectiles.size(); i++){
 			projectiles.get(i).render(screen);
 		}
+		
 	}
+	
 	public Tile getTile(int x, int y) {
 	//	System.out.println(" X = " + x + " Y = " + y  + " W = " + width + " H = " + height);
-		if (x < 0 || y < 0 || x >= width || y >= height ) return Tile.voidTile;
+		if (x < 0 || y < 0 || x >= width || y >= height )  return Tile.voidTile;
 		if (tiles[x + y * width] == 0xff00ff00) return Tile.grass;
-		if (tiles[x + y * width] == 0xffffff00) return Tile.flower;
+		if (tiles[x + y * width] == 0xffffff00)	return Tile.flower;
 		if (tiles[x + y * width] == 0xff7f7f00) return Tile.stone;
 		if (tiles[x + y * width] == 0xffff0000) return Tile.lava;
-		//if (tiles[x + y * width] == ) return Tile.wall;
-		//if (tiles[x + y * width] == ) return Tile.ground;
+		if (tiles[x + y * width] == 0xff808080) return Tile.wall;
+		if (tiles[x + y * width] == 0xff7F0000) return Tile.ground;
 		return Tile.grass;
 	}
 	

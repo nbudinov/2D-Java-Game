@@ -7,7 +7,7 @@ public class Projectile extends Entity {
 	private int direction = 1;
 	private Sprite sprite;
 	private int nx, ny;
-	private int speed = 5;
+	private int speed = 3;
 	private int dmg = 10;
 	public static int rateOfFire = 10;
 
