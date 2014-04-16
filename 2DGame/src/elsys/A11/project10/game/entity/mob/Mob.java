@@ -78,6 +78,10 @@ public abstract class Mob extends Entity {
 		level.projectiles.add(p);
 
 	}
+	public void createNpc(int x, int y) {
+		NPC e = new NPC(x, y);
+		level.npcs.add(e);
+	}
 
 	private boolean collision(int xDir, int yDir) {
 		boolean solid = false;

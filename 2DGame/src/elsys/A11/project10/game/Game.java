@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import elsys.A11.project10.game.entity.mob.NPC;
 import elsys.A11.project10.game.entity.mob.Player;
 import elsys.A11.project10.game.graphics.Screen;
 import elsys.A11.project10.game.input.KeyHandler;
@@ -44,7 +45,7 @@ public class Game extends Canvas implements Runnable {
 	private Screen screen;
 	private Level level;
 	private Player player;
-	private JFrame butt;
+	private NPC npc;
 
 	
 	public synchronized void start() {
@@ -67,8 +68,10 @@ public class Game extends Canvas implements Runnable {
 		screen = new Screen(width, height);
 		key = new KeyHandler();
 		level = new Level("/level.png");
-		player = new Player(40 * 16, 60 * 16, key);
+		player = new Player(0, 0, key);
 		player.init(level);
+		npc = new NPC();
+		npc.init(level);
 		
 		addKeyListener(key);
 		displayFrame();
@@ -115,6 +118,7 @@ public class Game extends Canvas implements Runnable {
 		level.tick();
 		if (key.isEsc()) System.exit(0);
 
+
 	}
 
 	private void render() {
@@ -145,11 +149,7 @@ public class Game extends Canvas implements Runnable {
 
 	private void displayFrame() {
 		 //frame.setUndecorated(true);
-			
-		//frame.add(field, BorderLayout.SOUTH);
-		//JTextArea area = new JTextArea(50, 100);
-		//frame.add(area, BorderLayout.CENTER);
-		//frame.add(panel);
+
 		
 		frame.setPreferredSize(new Dimension(width * scale, height * scale));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

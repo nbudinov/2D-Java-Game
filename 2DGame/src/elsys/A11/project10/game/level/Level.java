@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 
 import elsys.A11.project10.game.entity.Projectile;
 import elsys.A11.project10.game.entity.mob.Mob;
+import elsys.A11.project10.game.entity.mob.NPC;
 import elsys.A11.project10.game.graphics.Screen;
 import elsys.A11.project10.game.level.tile.Tile;
 
@@ -21,7 +22,8 @@ public class Level {
 	protected int[] tilesIn;
 	protected int[] tiles;
 	public List<Projectile> projectiles = new ArrayList<Projectile>();
-		
+	public List<NPC> npcs = new ArrayList<NPC>();
+	
 	public Level(int width, int height) {
 		this.width = width;
 		this.height = height;
@@ -38,6 +40,9 @@ public class Level {
 	public void tick(){
 		for (int i= 0 ; i < projectiles.size(); i++){
 			projectiles.get(i).tick();
+		}
+			for (int i= 0 ; i < npcs.size(); i++){
+			npcs.get(i).tick();
 		}
 	}
 
@@ -68,12 +73,14 @@ public class Level {
 			for (int x = x0; x < x1; x++) {
 				//System.out.println("y = " + y0 + " x = " + x0 );
 				getTile(x, y).render(x, y, screen);
-				
 			}
 		}
 		
 		for (int i= 0 ; i < projectiles.size(); i++){
 			projectiles.get(i).render(screen);
+		}
+		for (int i= 0 ; i < npcs.size(); i++){
+			npcs.get(i).render(npcs.get(i).x,npcs.get(i).y,screen);
 		}
 		
 	}

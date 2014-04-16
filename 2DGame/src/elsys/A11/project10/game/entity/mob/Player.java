@@ -19,9 +19,11 @@ public class Player extends Mob {
 	}
 
 	public void tick() {
-		if(rateOfFire > 0) rateOfFire--;
+		//System.out.println("npc size"+level.npcs.size());
+		//System.out.println("proj size"+level.projectiles.size());
+		if (rateOfFire > 0) rateOfFire--;
 		int xa = 0, ya = 0;
-		int offset = 3;
+		int offset = 4;
 		if (anim < 20)
 			anim++;
 		else
@@ -34,7 +36,7 @@ public class Player extends Mob {
 		if (input.isSpace()) {
 			hp = 100;
 			dead = false;
-			System.out.println("You are Full ");
+			if (level.npcs.size() == 0) createNpc(0,0);
 		}
 
 		if (xa != 0 || ya != 0) {
@@ -47,11 +49,15 @@ public class Player extends Mob {
 			shoot(x, y, this.direction);
 			rateOfFire = Projectile.rateOfFire;
 		}
+		if (level.projectiles.size() > 0 && level.npcs.size() > 0) 
+			for (int i = 0; i < level.projectiles.size(); i++) {
+				if (level.projectiles.get(i).x == this.x && level.projectiles.get(i).y == this.y) level.npcs.get(0).hp-= 20;
+		}
 	}
 
 	public void render(Screen screen) {
 		boolean pace = anim % 20 > 10;
-		if(!dead) {
+		if (!dead) {
 			if (walking) {
 
 				if (direction == 4 || direction == 5 || direction == 6) {
@@ -79,14 +85,15 @@ public class Player extends Mob {
 						screen.renderPlayer(x, y, Sprite.playerMoveSide, false, false);
 				}
 			} else {
-			
+
 				if (direction == 1) screen.renderPlayer(x, y, Sprite.playerSideStill, false, false);
 				if (direction == 2) screen.renderPlayer(x, y, Sprite.playerSideStill, true, false);
 				if (direction == 3 || direction == 7 || direction == 8) screen.renderPlayer(x, y, Sprite.playerFrontStill, true, false);
 				if (direction == 4 || direction == 5 || direction == 6) screen.renderPlayer(x, y, Sprite.playerBackStill, false, false);
-			
+
 			}
-		} else screen.renderPlayer(x, y, Sprite.playerDead, false, false);
+		} else
+			screen.renderPlayer(x, y, Sprite.playerDead, false, false);
 	}
 
 }
