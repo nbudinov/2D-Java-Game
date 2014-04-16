@@ -97,6 +97,11 @@ public class Level {
 		if (tiles[x + y * width] == 0xffff0000) return Tile.lava;
 		if (tiles[x + y * width] == 0xff808080) return Tile.wall;
 		if (tiles[x + y * width] == 0xff7F0000) return Tile.ground;
+		if (tiles[x + y * width] == 0xff6D7F3F) return Tile.chair;
+		if (tiles[x + y * width] == 0xffDDFF7F) return Tile.table;
+		if (tiles[x + y * width] == 0xff7FFCFF) return Tile.bed;
+		
+		
 		return Tile.grass;
 	}
 	

@@ -10,7 +10,7 @@ public class GrassTile extends Tile {
 	}
 
 	public void render(int x, int y, Screen screen) {
-		screen.renderTile(x * 16, y * 16, Sprite.grass);
+		screen.renderTile(x * 16, y * 16, Sprite.grass, false, false);
 	}
 	
 	public boolean solid() {

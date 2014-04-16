@@ -25,7 +25,7 @@ public class Player extends Mob {
 
 		if (rateOfFire > 0) rateOfFire--;
 		int xa = 0, ya = 0;
-		int offset = 1;
+		int offset = 4;
 		if (anim < 20)
 			anim++;
 		else
@@ -40,7 +40,7 @@ public class Player extends Mob {
 			dead = false;
 			int r =  rand.nextInt(200 - 0) + 0;
 			int r1 = rand.nextInt(200 - 0) + 0;
-			if (level.npcs.size() < 2 && !collision(r, r1)) createNpc(r, r1);
+			if (level.npcs.size() < 1 && !collision(r, r1)) createNpc(r, r1);
 			// System.out.println(rand.nextInt(200-0)+0);
 
 		}

@@ -16,6 +16,9 @@ public class Tile {
 	public static Tile wall = new WallTile(Sprite.wall);
 	public static Tile lava = new LavaTile(Sprite.lava);
 	public static Tile ground  = new GroundTile(Sprite.ground);
+	public static Tile chair  = new FurnitureTile(Sprite.chair);
+	public static Tile bed  = new FurnitureTile(Sprite.bed);
+	public static Tile table  = new FurnitureTile(Sprite.table);
 	
 	public Tile(Sprite sprite){
 		this.sprite = sprite;

@@ -10,7 +10,7 @@ public class StoneTile extends Tile {
 	}
 
 	public void render(int x, int y, Screen screen) {
-		screen.renderTile(x << 4, y << 4, Sprite.stone);
+		screen.renderTile(x * 16, y * 16, Sprite.stone, false, false);
 	}
 
 	public boolean solid() {

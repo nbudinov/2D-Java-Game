@@ -37,7 +37,7 @@ public class Projectile extends Entity {
 	
 
 	public void render(Screen screen) {
-		screen.renderTile(this.x, this.y, sprite);
+		screen.renderTile(this.x, this.y, sprite, false, false);
 	}
 
 	private void setDir(int direction) {

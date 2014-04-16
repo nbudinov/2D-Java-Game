@@ -7,13 +7,18 @@ public class Sprite {
 	private SpriteSheet sheet;
 
 	//Terrain
+	public static Sprite voidSprite = new Sprite(16, 0xff77ff);
 	public static Sprite grass = new Sprite(16, 0, 0, SpriteSheet.sheet);
 	public static Sprite stone = new Sprite(16, 2, 0, SpriteSheet.sheet);
 	public static Sprite flower = new Sprite(16, 1, 0, SpriteSheet.sheet);
-	public static Sprite voidSprite = new Sprite(16, 0xff77ff);
 	public static Sprite wall = new Sprite(16, 0, 1, SpriteSheet.sheet);
 	public static Sprite lava = new Sprite(16, 1, 1, SpriteSheet.sheet);
 	public static Sprite ground = new Sprite(16, 2, 1, SpriteSheet.sheet );
+	public static Sprite chair = new Sprite(16, 1, 3, SpriteSheet.sheet );
+	public static Sprite table = new Sprite(16, 2, 3, SpriteSheet.sheet );
+	public static Sprite bed = new Sprite(16, 0, 3, SpriteSheet.sheet );
+	
+	
 	
 	//Player
 	public static Sprite playerDead = new Sprite(16, 6, 15, SpriteSheet.sheet);

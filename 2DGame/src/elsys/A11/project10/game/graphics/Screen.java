@@ -19,18 +19,21 @@ public class Screen {
 	}
 
 
-	public void renderTile(int xPos, int yPos, Sprite sprite) {
+	public void renderTile(int xPos, int yPos, Sprite sprite, boolean xFlip, boolean yFlip) {
 		xPos -= xOffset;
 		yPos -= yOffset;
 		for (int y = 0; y < sprite.getSIZE(); y++) {
 			int ya = (y + yPos);
-
+			int yf = y;
+			if (yFlip) yf = 15 - y;
 			for (int x = 0; x < sprite.getSIZE(); x++) {
 				int xa = x + xPos;
+				int xf = x;
+				if (xFlip) xf = 15 - x;
 				if (xa < -sprite.getSIZE() || xa >= width || ya < 0 || ya >= height) break; 
 				if (xa < 0) xa = 0;
 				//pixels[xa + ya * width] = sprite.pixels[x + y * sprite.getSIZE()];
-				int colour = sprite.pixels[x + y * sprite.getSIZE()];
+				int colour = sprite.pixels[xf + yf * sprite.getSIZE()];
 				if (colour != 0xff000000) pixels[xa + ya * width] = colour;
 				
 			}
