@@ -51,9 +51,12 @@ public class Player extends Mob {
 		} else {
 			walking = false;
 		}
-		if (input.isShift() && rateOfFire <= 0) {
-			shoot(x, y, this.direction);
-			rateOfFire = Projectile.getRateOfFire();
+		
+		if(!dead) {
+			if (input.isShift() && rateOfFire <= 0) {
+				shoot(x, y, this.direction);
+				rateOfFire = Projectile.getRateOfFire();
+			}
 		}
 		hurtNpc();
 		//System.out.println("proj size" + level.projectiles.size());
