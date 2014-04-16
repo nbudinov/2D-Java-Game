@@ -36,7 +36,7 @@ public class Player extends Mob {
 		if (input.isSpace()) {
 			hp = 100;
 			dead = false;
-			if (level.npcs.size() == 0) createNpc(0,0);
+			if (level.npcs.size() == 0) createNpc(100,100);
 		}
 
 		if (xa != 0 || ya != 0) {
@@ -49,10 +49,8 @@ public class Player extends Mob {
 			shoot(x, y, this.direction);
 			rateOfFire = Projectile.rateOfFire;
 		}
-		if (level.projectiles.size() > 0 && level.npcs.size() > 0) 
-			for (int i = 0; i < level.projectiles.size(); i++) {
-				if (level.projectiles.get(i).x == this.x && level.projectiles.get(i).y == this.y) level.npcs.get(0).hp-= 20;
-		}
+		hurtNpc();
+		
 	}
 
 	public void render(Screen screen) {
@@ -94,6 +92,12 @@ public class Player extends Mob {
 			}
 		} else
 			screen.renderPlayer(x, y, Sprite.playerDead, false, false);
+	}
+	private void hurtNpc(){
+		if (level.projectiles.size() > 0 && level.npcs.size() > 0) 
+			for (int i = 0; i < level.projectiles.size(); i++) {
+				if (level.projectiles.get(i).x == level.npcs.get(0).x && level.projectiles.get(i).y == level.npcs.get(0).y) level.npcs.get(0).hp-= 20;
+		}
 	}
 
 }

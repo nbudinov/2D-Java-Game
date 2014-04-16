@@ -68,10 +68,8 @@ public class Game extends Canvas implements Runnable {
 		screen = new Screen(width, height);
 		key = new KeyHandler();
 		level = new Level("/level.png");
-		player = new Player(0, 0, key);
+		player = new Player(100, 100, key);
 		player.init(level);
-		npc = new NPC();
-		npc.init(level);
 		
 		addKeyListener(key);
 		displayFrame();
