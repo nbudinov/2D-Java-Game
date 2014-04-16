@@ -7,9 +7,11 @@ public class Projectile extends Entity {
 	private int direction = 1;
 	private Sprite sprite;
 	private int nx, ny;
-	private int speed = 3;
-	private int dmg = 10;
-	public static int rateOfFire = 10;
+	private int speed = 4;
+	private int xMoved, yMoved;
+	private static int dmg = 20;
+	private static int rateOfFire = 10;
+	private static int range = 100;
 
 	public Projectile(int x, int y, int direction) {
 		this.x = x;
@@ -28,7 +30,11 @@ public class Projectile extends Entity {
 	private void move() {
 		this.x+=nx*speed;
 		this.y+=ny*speed;
+		xMoved += 1;
+		yMoved += 1;
 	}
+	
+	
 
 	public void render(Screen screen) {
 		screen.renderTile(this.x, this.y, sprite);
@@ -67,5 +73,25 @@ public class Projectile extends Entity {
 			this.nx = 1;
 			this.ny = 0;
 		}
+	}
+
+	public static int getDmg() {
+		return dmg;
+	}
+
+	public static int getRateOfFire() {
+		return rateOfFire;
+	}
+
+	public static int getRange() {
+		return range;
+	}
+	
+	public int getxMoved(){
+		return xMoved;
+	}
+	
+	public int getyMoved(){
+		return xMoved;
 	}
 }

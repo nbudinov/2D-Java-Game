@@ -83,7 +83,7 @@ public abstract class Mob extends Entity {
 		level.npcs.add(e);
 	}
 
-	private boolean collision(int xDir, int yDir) {
+	public boolean collision(int xDir, int yDir) {
 		boolean solid = false;
 		int corner;
 		for(corner = 0; corner < 4; corner++){

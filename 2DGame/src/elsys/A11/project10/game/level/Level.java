@@ -40,10 +40,13 @@ public class Level {
 	public void tick(){
 		for (int i= 0 ; i < projectiles.size(); i++){
 			projectiles.get(i).tick();
+			removeProjectile(i);
 		}
 			for (int i= 0 ; i < npcs.size(); i++){
 			npcs.get(i).tick();
+
 		}
+			
 	}
 
 	public void loadLevel(String path) {
@@ -96,6 +99,11 @@ public class Level {
 		if (tiles[x + y * width] == 0xff7F0000) return Tile.ground;
 		return Tile.grass;
 	}
+	
+	private void removeProjectile(int i){
+		if (projectiles.get(i).getxMoved()+projectiles.get(i).getyMoved() > Projectile.getRange())
+			projectiles.remove(i);
+		}
 	
 	
 }
