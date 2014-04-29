@@ -28,38 +28,40 @@ public abstract class Mob extends Entity {
 		if (yDir < 0 && xDir > 0) direction = 6;
 		if (yDir > 0 && xDir < 0) direction = 7;
 		if (yDir > 0 && xDir > 0) direction = 8;
-
+	}
+	
+	public void Collis(boolean dead, int xa, int ya) {
 		if(!dead) {
-			if (!collision(xDir, 0)) {
-				x += xDir;
+			if (!collision(xa, 0)) {
+				x += xa;
 			}
 		
-			if (!collision(0, yDir)) {
-				y += yDir;
+			if (!collision(0, ya)) {
+				y += ya;
 			}
 		}
-		if(dieColl(xDir, yDir)) {
+	}
+	
+	public void dieCollis(int xa, int ya) {
+		if(dieColl(xa, ya)) {
 			int i = 0;
-				while(i <= 7200) {
-					i += 1;
-					if(i == 7200 ) {
-						if(hp >= 0) {
-							reduceHp();
-						}
-						else
-							dead = true;
-					}
+			while(i <= 7200) {
+				i += 1;
+				if(i == 7200 ) {
+					reduceHp();
 				}
-			}	
+				else
+					dead = true;
+			}
 		}
-	
-	
-	public void GameOver() {
 	}
 	
 	public void reduceHp() {
-		hp -= 20;
-		System.out.println( " HP = " + hp );
+		if(hp > 0) {
+			hp -= 20;
+		}
+		
+		//System.out.println( " HP = " + hp );
 	}
 
 	public boolean dieColl(int xDir, int yDir) {
@@ -87,8 +89,8 @@ public abstract class Mob extends Entity {
 		boolean solid = false;
 		int corner;
 		for(corner = 0; corner < 4; corner++){
-			int xcor = ( ((x + xDir)  + corner * 2 + 6) / 16);
-			int ycor = ( ((y + yDir) + corner  * 2 + 7) / 16);
+			int xcor = ( ((x + xDir)  + corner *2  + 5) / 16);
+			int ycor = ( ((y + yDir) + corner *2  + 6) / 16);
 			if( level.getTile( xcor, ycor ).solid() )  solid = true;				
 		}	
 	

@@ -39,8 +39,8 @@ public class NPC extends Mob {
 
 	public void render(int x, int y, Screen screen) {
 		if (hp > 0)
-			screen.renderPlayer(x, y, Sprite.playerFrontStill, true, false);
+			screen.renderPlayer(x, y, Sprite.npcFrontStill, true, false);
 		else
-			screen.renderPlayer(x, y, Sprite.playerDead, false, false);
+			screen.renderPlayer(x, y, Sprite.npcDead, false, false);
 	}
 }

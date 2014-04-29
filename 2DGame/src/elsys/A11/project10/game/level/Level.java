@@ -18,19 +18,19 @@ public class Level {
 	
 	
 	public static final Random random = new Random();
-	protected int width, height;
-	protected int[] tilesIn;
-	protected int[] tiles;
+	public int width, height;
+	public int[] tilesIn;
+	public int[] tiles;
 	public List<Projectile> projectiles = new ArrayList<Projectile>();
 	public List<NPC> npcs = new ArrayList<NPC>();
 	
-	public Level(int width, int height) {
-		this.width = width;
-		this.height = height;
-		tilesIn = new int[width * height];
+	//public Level(int width, int height) {
+	//	this.width = width;
+	//	this.height = height;
+	//	tilesIn = new int[width * height];
 
 	//	generateLevel();
-	}
+	//}
 	
 	public Level(String path) {
 		loadLevel(path);
@@ -44,20 +44,22 @@ public class Level {
 		}
 			for (int i= 0 ; i < npcs.size(); i++){
 			npcs.get(i).tick();
-
-		}
-			
+		}	
 	}
 
 	public void loadLevel(String path) {
+		BufferedImage image = null;
 		try {
-			BufferedImage image = ImageIO.read(Level.class.getResource(path));
-			int w = width = image.getWidth();
-			int h = height = image.getHeight();
-		//	System.out.println(" W =" + width + " H = " + height);	
-			tiles = new int[w * h];
+			image = ImageIO.read(Level.class.getResource(path));
+			//System.out.println(" IMG === " + image);
+			width = image.getWidth();
+			height = image.getHeight();
+			//int h = image.getHeight();
+			//int w = image.getWidth();
+			//System.out.println(" W =" + width + " H = " + height);	
+			tiles = new int[width * height];
 			
-			image.getRGB(0, 0, w, h, tiles, 0, w);
+			image.getRGB(0, 0, width, height, tiles, 0, width);
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.out.println("Load error level");
@@ -67,11 +69,13 @@ public class Level {
 	
 	public void render(int xScroll, int yScroll, Screen screen) {
 		screen.setOffset(xScroll, yScroll);
+		//System.out.println("xS = " + xScroll + "  yS = " + yScroll);
 		int x0 = xScroll / 16;
 		int x1 = (xScroll + screen.getWidth() + 16) / 16;
 		int y0 = yScroll / 16;
-		int y1 = (yScroll + screen.getHeight() + 16) / 16;
+		int y1 = (yScroll + screen.getHeight() + 16) /16;
 
+		//System.out.println("x0 = " + x0 + " x1 = " + x1 + " y0 = " + y0 + " y1 = " + y1 );
 		for (int y = y0; y < y1; y++) {
 			for (int x = x0; x < x1; x++) {
 				//System.out.println("y = " + y0 + " x = " + x0 );

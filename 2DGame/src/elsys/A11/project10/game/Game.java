@@ -45,7 +45,6 @@ public class Game extends Canvas implements Runnable {
 	private Screen screen;
 	private Level level;
 	private Player player;
-	private NPC npc;
 
 	
 	public synchronized void start() {
@@ -68,7 +67,7 @@ public class Game extends Canvas implements Runnable {
 		screen = new Screen(width, height);
 		key = new KeyHandler();
 		level = new Level("/level.png");
-		player = new Player(100, 100, key);
+		player = new Player(150, 150, key);
 		player.init(level);
 		
 		addKeyListener(key);
@@ -78,6 +77,7 @@ public class Game extends Canvas implements Runnable {
 	@Override
 	public void run() {
 		long lastTime = System.nanoTime();
+		System.out.println("LASTTIME == " + lastTime);
 		final double ns = 1000000000.0 / 60;
 		long timer = System.currentTimeMillis();
 		double delta = 0;
@@ -89,10 +89,11 @@ public class Game extends Canvas implements Runnable {
 			long now = System.nanoTime();
 			delta += (now - lastTime) / ns;
 			lastTime = now;
-			while (delta >= 1) {
+			while (delta >= 1) {				
 				tick();
 				ticks++;
 				delta--;
+
 			}
 			render();
 			frames++;
@@ -115,7 +116,6 @@ public class Game extends Canvas implements Runnable {
 		player.tick();
 		level.tick();
 		if (key.isEsc()) System.exit(0);
-
 
 	}
 

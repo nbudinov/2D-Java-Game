@@ -19,8 +19,11 @@ public class Sprite {
 	public static Sprite bed = new Sprite(16, 0, 3, SpriteSheet.sheet );
 	
 	
-	
-	//Player
+	//npc
+	public static Sprite npcDead = new Sprite(16, 6, 14, SpriteSheet.sheet);
+	public static Sprite npcFrontStill = new Sprite(16, 4, 14, SpriteSheet.sheet);
+
+	//Player	
 	public static Sprite playerDead = new Sprite(16, 6, 15, SpriteSheet.sheet);
 	public static Sprite playerMoveUp = new Sprite(16, 0, 15, SpriteSheet.sheet);
 	public static Sprite playerMoveDown = new Sprite(16, 1, 15, SpriteSheet.sheet);

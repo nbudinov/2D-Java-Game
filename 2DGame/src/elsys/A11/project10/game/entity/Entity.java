@@ -7,17 +7,15 @@ import elsys.A11.project10.game.level.Level;
 
 public abstract class Entity {
 	public int x, y;
-	private boolean removed =false;
+	private boolean removed = false;
 	protected Level level;
 	protected final Random random = new Random();
 	
-	public void tick(){
-		
-	}
+	//public void tick(){
+	//}
 	
-	public void render(Screen screen){
-		
-	}
+	//public void render(Screen screen){
+	//}
 	
 	public void remove(){
 		removed = true;
