@@ -45,7 +45,7 @@ public class Player extends Mob {
 
 		}
 		
-		Collis(dead,xa, ya);
+		
 		dieCollis(xa, ya);
 				
 		if (xa != 0 || ya != 0) {
@@ -62,6 +62,7 @@ public class Player extends Mob {
 			}
 		}
 		hurtNpc();
+		increaseMana();
 		//System.out.println("proj size" + level.projectiles.size());
 		//System.out.println("npc size" + level.npcs.size());
 	}

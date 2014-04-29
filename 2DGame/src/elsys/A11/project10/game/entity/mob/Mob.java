@@ -13,13 +13,15 @@ public abstract class Mob extends Entity {
 	public int direction = 1;
 	protected boolean moving = false;
 	public int hp = 100;
+	public int mana = 100;
 	public boolean dead = false;
-	
+	int pace = 0;
+
 	public List<Projectile> projectiles = new ArrayList<Projectile>();
-	
+
 	public void move(int xDir, int yDir) {
-		//hp = 100;
-		//System.out.println(" x = " + x + " y = " + y);
+		// hp = 100;
+		// System.out.println(" x = " + x + " y = " + y);
 		if (xDir > 0) direction = 1;
 		if (xDir < 0) direction = 2;
 		if (yDir > 0) direction = 3;
@@ -28,58 +30,58 @@ public abstract class Mob extends Entity {
 		if (yDir < 0 && xDir > 0) direction = 6;
 		if (yDir > 0 && xDir < 0) direction = 7;
 		if (yDir > 0 && xDir > 0) direction = 8;
+		Collis(dead, xDir, yDir);
 	}
-	
+
 	public void Collis(boolean dead, int xa, int ya) {
-		if(!dead) {
-			if (!collision(xa, 0)) {
+		if (!dead) {
+			if (!collision(xa, 0) && !endOfMapCollision(xa, 0)) {
 				x += xa;
 			}
-		
-			if (!collision(0, ya)) {
+
+			if (!collision(0, ya) && !endOfMapCollision(0, ya)) {
 				y += ya;
 			}
 		}
 	}
-	
+
 	public void dieCollis(int xa, int ya) {
-		if(dieColl(xa, ya)) {
+		if (dieColl(xa, ya)) {
 			int i = 0;
-			while(i <= 7200) {
+			while (i <= 7200) {
 				i += 1;
-				if(i == 7200 ) {
-					reduceHp();
+				if (i == 7200) {
+					if (hp >= 5) {
+						reduceHp();
+					} else {
+						dead = true;
+						hp = 0;
+					}
 				}
-				else
-					dead = true;
 			}
 		}
-	}
-	
-	public void reduceHp() {
-		if(hp > 0) {
-			hp -= 20;
-		}
-		
-		//System.out.println( " HP = " + hp );
 	}
 
 	public boolean dieColl(int xDir, int yDir) {
 		boolean die = false;
 		int corner;
-		for(corner = 0; corner < 4; corner++){
-			int xcor = ( ((x + xDir)  + corner * 2 + 6) / 16);
-			int ycor = ( ((y + yDir) + corner  * 2 + 7) / 16);
+		for (corner = 0; corner < 4; corner++) {
+			int xcor = (((x + xDir) + corner * 2 + 6) / 16);
+			int ycor = (((y + yDir) + corner * 2 + 7) / 16);
 			if (level.getTile(xcor, ycor).die()) die = true;
 		}
-	return die;
+		return die;
 	}
-	
-	protected void shoot(int x, int ys, int direction){
-		Projectile p = new Projectile(x,y,direction);
-		level.projectiles.add(p);
+
+	protected void shoot(int x, int ys, int direction) {
+		if (mana > 10) {
+			Projectile p = new Projectile(x, y, direction);
+			level.projectiles.add(p);
+			reduceMana();
+		}
 
 	}
+
 	public void createNpc(int x, int y) {
 		NPC e = new NPC(x, y);
 		level.npcs.add(e);
@@ -88,15 +90,43 @@ public abstract class Mob extends Entity {
 	public boolean collision(int xDir, int yDir) {
 		boolean solid = false;
 		int corner;
-		for(corner = 0; corner < 4; corner++){
-			int xcor = ( ((x + xDir)  + corner *2  + 5) / 16);
-			int ycor = ( ((y + yDir) + corner *2  + 6) / 16);
-			if( level.getTile( xcor, ycor ).solid() )  solid = true;				
-		}	
-	
-		//System.out.println(" = " + (x + xDir) / 16 + " =  "+(y + yDir) / 16);
+		for (corner = 0; corner < 4; corner++) {
+			int xcor = (((x + xDir) + corner * 2 + 5) / 16);
+			int ycor = (((y + yDir) + corner * 2 + 6) / 16);
+			if (level.getTile(xcor, ycor).solid()) solid = true;
+		}
+
+		// System.out.println(" = " + (x + xDir) / 16 + " =  "+(y + yDir) / 16);
 		return solid;
 	}
-	
+
+	public boolean endOfMapCollision(int xDir, int yDir) {
+		// System.out.println("x + xDir = " + (x + xDir) + " y + yDir =  " + (y
+		// + yDir));
+		boolean end = false;
+		if (x + xDir <= -10 || y + yDir <= -10) end = true;
+		if (x + xDir >= 127 * 16 + 10 || y + yDir >= 127 * 16 + 5) end = true;
+
+		return end;
+	}
+
+	public void reduceHp() {
+		hp -= 15;
+	}
+
+	private void reduceMana() {
+		mana -= 10;
+	}
+
+	protected void increaseMana() {
+		pace++;
+		// System.out.println(pace);
+		if (pace == 5) {
+			mana++;
+			pace = 0;
+		}
+		if (mana >= 100) mana = 100;
+
+	}
 
 }

@@ -34,6 +34,9 @@ public class Game extends Canvas implements Runnable {
 	private static final int scale = 3;
 	private static final String name = "Game";
 
+	private int ix = 0;
+	private int iy = 0;
+	
 	boolean running = false;
 
 	private BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
@@ -130,8 +133,9 @@ public class Game extends Canvas implements Runnable {
 		for (int i = 0; i < pixels.length; i++) {
 			pixels[i] = screen.pixels[i];
 		}
+		endOfMapPlayerPos();
 
-		level.render( player.x - screen.getWidth() / 2, player.y - screen.getHeight() / 2,  screen); //    player.x - screen.getWidth() / 2, player.y - screen.getHeight() / 2
+		level.render( player.x - screen.getWidth() / 2 + ix, player.y - screen.getHeight() / 2+iy,  screen); //    player.x - screen.getWidth() / 2, player.y - screen.getHeight() / 2
 		player.render(screen);
 		
 		Graphics g = bs.getDrawGraphics();
@@ -140,6 +144,7 @@ public class Game extends Canvas implements Runnable {
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("Verdana", 0, 20));
 		//g.drawString("hp " + hp, 400, 400);
+		displayHealth(g);
 		g.dispose();
 		bs.show();
 
@@ -161,6 +166,27 @@ public class Game extends Canvas implements Runnable {
 		//frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setVisible(true);
 
+	}
+	
+	private void displayHealth(Graphics g) {
+		g.setFont(new Font("Verdana", 0, 10));
+		g.setColor(Color.RED);
+		g.fillRect(width * scale - 100, 0, player.hp, 25);
+		g.setColor(Color.WHITE);
+		g.drawString("hp " + player.hp, width * scale - 75, 15);
+		g.setColor(Color.BLUE);
+		g.fillRect(width * scale - 100, 25, player.mana, 25);
+		g.setColor(Color.WHITE);
+		g.drawString("mana " + player.mana, width * scale - 75, 40);
+
+	}
+	
+	private void endOfMapPlayerPos(){
+		if (player.x < screen.getWidth() / 2 && player.walking) ix = screen.getWidth() / 2 - player.x;
+		if (player.x > 128 * 16 - screen.getWidth() / 2 && player.walking) ix = -(screen.getWidth() / 2 - (level.getMapWidth() - player.x));
+		
+		if (player.y < screen.getHeight() / 2 && player.walking) iy = screen.getHeight() / 2 - player.y;
+		if (player.y > 128 * 16 - screen.getHeight() / 2 && player.walking) iy = -(screen.getHeight() / 2 - (level.getMapHeight() - player.y));
 	}
 
 }
