@@ -134,7 +134,6 @@ public class Game extends Canvas implements Runnable {
 			pixels[i] = screen.pixels[i];
 		}
 		endOfMapPlayerPos();
-
 		level.render( player.x - screen.getWidth() / 2 + ix, player.y - screen.getHeight() / 2+iy,  screen); //    player.x - screen.getWidth() / 2, player.y - screen.getHeight() / 2
 		player.render(screen);
 		
@@ -182,6 +181,7 @@ public class Game extends Canvas implements Runnable {
 	}
 	
 	private void endOfMapPlayerPos(){
+		System.out.println("ix = " + (level.getMapWidth() - player.x) + " iy " + player.y);
 		if (player.x < screen.getWidth() / 2 && player.walking) ix = screen.getWidth() / 2 - player.x;
 		if (player.x > 128 * 16 - screen.getWidth() / 2 && player.walking) ix = -(screen.getWidth() / 2 - (level.getMapWidth() - player.x));
 		

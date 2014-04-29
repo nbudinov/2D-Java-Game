@@ -38,24 +38,23 @@ public class Player extends Mob {
 		if (input.isSpace()) {
 			hp = 100;
 			dead = false;
-			int r =  rand.nextInt(200 - 0) + 0;
+			int r = rand.nextInt(200 - 0) + 0;
 			int r1 = rand.nextInt(200 - 0) + 0;
 			if (level.npcs.size() < 7 && !collision(r, r1)) createNpc(r, r1);
 			// System.out.println(rand.nextInt(200-0)+0);
 
 		}
-		
-		
+
 		dieCollis(xa, ya);
-				
+
 		if (xa != 0 || ya != 0) {
 			move(xa, ya);
 			walking = true;
 		} else {
 			walking = false;
 		}
-		
-		if(!dead) {
+
+		if (!dead) {
 			if (input.isShift() && rateOfFire <= 0) {
 				shoot(x, y, this.direction);
 				rateOfFire = Projectile.getRateOfFire();
@@ -63,10 +62,10 @@ public class Player extends Mob {
 		}
 		hurtNpc();
 		increaseMana();
-		//System.out.println("proj size" + level.projectiles.size());
-		//System.out.println("npc size" + level.npcs.size());
+		// System.out.println("proj size" + level.projectiles.size());
+		// System.out.println("npc size" + level.npcs.size());
 	}
-	
+
 	public void render(Screen screen) {
 		boolean pace = anim % 20 > 10;
 		if (!dead) {
@@ -110,28 +109,26 @@ public class Player extends Mob {
 
 	private void hurtNpc() {
 		int n = 0;
-		if (level.projectiles.size() > 0 && level.npcs.size() > 0) {
-			for (int p = 0; p < level.projectiles.size() -1 ; p++) {
-				for( n = 0; n < level.npcs.size(); n++ ) {
-					
-					if (isProjInNpcX(p, n) && isProjInNpcY(p, n)) {
-						level.npcs.get(n).hp -= Projectile.getDmg();
-						level.projectiles.remove(p);
-					}
-				System.out.println(n);
-				System.out.println("hp"+level.npcs.get(n).hp);
-				//if (n < level.npcs.size()) n++ ;
-				//else n= 0;
+		for (int p = 0; p < level.projectiles.size() - 0; p++) {
+			for (n = 0; n < level.npcs.size(); n++) {
+
+				if (isProjInNpcX(p, n) && isProjInNpcY(p, n)) {
+					level.npcs.get(n).hp -= Projectile.getDmg();
+					level.projectiles.remove(p);
+					break;
 				}
+				//System.out.println(n);
+				//System.out.println("hp" + level.npcs.get(n).hp);
+				// if (n < level.npcs.size()) n++ ;
+				// else n= 0;
 			}
 		}
 	}
 
 	private Boolean isProjInNpcX(int i, int n) {
 		boolean hit = false;
-	if(level.projectiles.get(i).x > level.npcs.get(n).hbx1 == true && level.projectiles.get(i).x < level.npcs.get(n).hbx2 == true)
-		hit = true;
-	return hit;
+		if (level.projectiles.get(i).x > level.npcs.get(n).hbx1 == true && level.projectiles.get(i).x < level.npcs.get(n).hbx2 == true) hit = true;
+		return hit;
 	}
 
 	private Boolean isProjInNpcY(int i, int n) {

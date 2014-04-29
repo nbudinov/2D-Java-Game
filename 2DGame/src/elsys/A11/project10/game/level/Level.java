@@ -57,6 +57,8 @@ public class Level {
 			// int w = image.getWidth();
 			// System.out.println(" W =" + width + " H = " + height);
 			tiles = new int[width * height];
+			mapWidth = width*16;
+			mapHeight = height*16;
 
 			image.getRGB(0, 0, width, height, tiles, 0, width);
 		} catch (IOException e) {
