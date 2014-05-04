@@ -4,22 +4,27 @@ import elsys.A11.project10.game.graphics.Screen;
 import elsys.A11.project10.game.graphics.Sprite;
 
 public class Projectile extends Entity {
-	private int direction = 1;
+	public double x,y;
+	private double direction;
 	private Sprite sprite;
-	private int nx, ny;
-	private int speed = 4;
+	private double nx, ny;
+	private int speed = 5	;
 	private int xMoved, yMoved;
 	private static int dmg = 20;
-	private static int rateOfFire = 10;
-	private static int range = 100;
+	private static int rateOfFire = 5;
+	private static int range = 500;
 
-	public Projectile(int x, int y, int direction) {
+	public Projectile(int x, int y, double direction) {
 		this.x = x;
 		this.y = y;
 		this.direction = direction;
 		sprite = Sprite.projectile;
+		
+		nx = Math.cos(direction) * speed;
+		ny = Math.sin(direction) * speed;
+		System.out.println(ny);
 
-		setDir(direction);
+		//setDir(direction);
 	}
 
 	public void tick() {
@@ -28,52 +33,20 @@ public class Projectile extends Entity {
 	}
 
 	private void move() {
-		this.x+=nx*speed;
-		this.y+=ny*speed;
-		xMoved += 1;
-		yMoved += 1;
+		//moveProjectile(Mouse.getMouseX(), Mouse.getMouseY(), speed);
+		//System.out.println(level.npcs.size());
+		x += nx;
+		y += ny;
+		xMoved+=1;
+		yMoved+=1;
 	}
 	
 	
 
 	public void render(Screen screen) {
-		screen.renderTile(this.x, this.y, sprite, false, false);
+		screen.renderTile((int)this.x, (int)this.y, sprite, false, false);
 	}
 
-	private void setDir(int direction) {
-		if (direction == 8) {
-			this.nx = 1;
-			this.ny = 1;
-		}
-		if (direction == 7) {
-			this.nx = -1;
-			this.ny = 1;
-		}
-		if (direction == 6) {
-			this.nx = 1;
-			this.ny = -1;
-		}
-		if (direction == 5) {
-			this.nx = -1;
-			this.ny = -1;
-		}
-		if (direction == 4) {
-			this.nx = 0;
-			this.ny = -1;
-		}
-		if (direction == 3) {
-			this.nx = 0;
-			this.ny = 1;
-		}
-		if (direction == 2) {
-			this.nx = -1;
-			this.ny = 0;
-		}
-		if (direction == 1) {
-			this.nx = 1;
-			this.ny = 0;
-		}
-	}
 
 	public static int getDmg() {
 		return dmg;

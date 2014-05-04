@@ -1,15 +1,9 @@
 package elsys.A11.project10.game.graphics;
 
-import java.util.Random;
-
-import elsys.A11.project10.game.entity.mob.Player;
-import elsys.A11.project10.game.level.tile.Tile;
-
 public class Screen {
-	private int width, height;
+	private static int width, height;
 	public int[] pixels;
-	public int xOffset, yOffset;
-	private Random random = new Random();
+	public  int xOffset, yOffset;
 
 	public Screen(int width, int height) {
 		this.width = width;
@@ -67,7 +61,7 @@ public class Screen {
 		this.yOffset = yOffset;
 	}
 
-	public int getHeight() {
+	public static int getHeight() {
 		return height;
 	}
 

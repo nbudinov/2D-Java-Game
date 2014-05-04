@@ -8,7 +8,6 @@ import elsys.A11.project10.game.entity.Projectile;
 import elsys.A11.project10.game.graphics.Sprite;
 
 public abstract class Mob extends Entity {
-
 	protected Sprite sprite;
 	public int direction = 1;
 	protected boolean moving = false;
@@ -73,7 +72,7 @@ public abstract class Mob extends Entity {
 		return die;
 	}
 
-	protected void shoot(int x, int ys, int direction) {
+	protected void shoot(int x, int ys, double direction) {
 		if (mana > 10) {
 			Projectile p = new Projectile(x, y, direction);
 			level.projectiles.add(p);

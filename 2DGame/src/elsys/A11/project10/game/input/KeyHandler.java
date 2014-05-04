@@ -5,7 +5,7 @@ import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener {
 
-	private boolean[] keys = new boolean[120];
+	private boolean[] keys = new boolean[1000];
 	public boolean up, down, left, right, esc, space, shift;
 
 	public void tick() {

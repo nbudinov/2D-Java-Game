@@ -9,7 +9,6 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 
 import elsys.A11.project10.game.entity.Projectile;
-import elsys.A11.project10.game.entity.mob.Mob;
 import elsys.A11.project10.game.entity.mob.NPC;
 import elsys.A11.project10.game.graphics.Screen;
 import elsys.A11.project10.game.level.tile.Tile;
@@ -70,11 +69,11 @@ public class Level {
 
 	public void render(int xScroll, int yScroll, Screen screen) {
 		screen.setOffset(xScroll, yScroll);
-		// System.out.println("xS = " + xScroll + "  yS = " + yScroll);
 		int x0 = xScroll / 16;
 		int x1 = (xScroll + screen.getWidth() + 16) / 16;
 		int y0 = yScroll / 16;
 		int y1 = (yScroll + screen.getHeight() + 16) / 16;
+		//System.out.println("xS = " + xScroll + "  yS = " + yScroll);
 
 		// System.out.println("x0 = " + x0 + " x1 = " + x1 + " y0 = " + y0 +
 		// " y1 = " + y1 );
