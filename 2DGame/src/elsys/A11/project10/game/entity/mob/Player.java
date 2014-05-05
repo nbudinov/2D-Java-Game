@@ -17,6 +17,8 @@ public class Player extends Mob {
 	private int rateOfFire = Projectile.getRateOfFire();
 	Random rand = new Random();
 
+	public int heroSpeed = 2;
+	
 	public Player(int x, int y, KeyHandler input) {
 		this.x = x;
 		this.y = y;
@@ -34,10 +36,10 @@ public class Player extends Mob {
 		else
 			anim = 0;
 		// System.out.println(anim);
-		if (input.isUp()) ya -= offset;
-		if (input.isDown()) ya += offset;
-		if (input.isRight()) xa += offset;
-		if (input.isLeft()) xa -= offset;
+		if (input.isUp()) ya -= heroSpeed;
+		if (input.isDown()) ya += heroSpeed;
+		if (input.isRight()) xa += heroSpeed;
+		if (input.isLeft()) xa -= heroSpeed;
 		if (input.isSpace()) {
 			hp = 100;
 			mana = 100;
@@ -49,8 +51,23 @@ public class Player extends Mob {
 
 		}
 
+		if (input.isP()) {
+			int p = rand.nextInt(300 - 0) + 0;
+			int p1 = rand.nextInt(300 - 0) + 0;
+			
+			int type = rand.nextInt(4 - 0) + 0;
+			System.out.println("type === "  + type);
+			if (level.potions.size() < 10 && !collision(p, p1)) spawnPotion(p, p1, type);
+			
+				
+			
+		}
+		
+		
+		
 		dieCollis(xa, ya);
-
+		getPotion();
+		
 		if (xa != 0 || ya != 0) {
 			move(xa, ya);
 			walking = true;
@@ -108,7 +125,9 @@ public class Player extends Mob {
 				if (direction == 4 || direction == 5 || direction == 6) screen.renderPlayer(x, y, Sprite.playerBackStill, false, false);
 
 			}
-		} else if (hp < 0) screen.renderPlayer(x, y, Sprite.playerDead, false, false);
+		} else if (hp <= 0){
+			screen.renderPlayer(x, y, Sprite.playerDead, false, false);
+		}
 	}
 
 	private void hurtNpc() {
@@ -158,4 +177,64 @@ public class Player extends Mob {
 		return ((level.npcs.get(n).y > this.y - 10) && (level.npcs.get(n).y < this.y + 10));
 	}
 
+
+
+
+public void getPotion() {
+	for(int p = 0; p < level.potions.size() ; p++) {
+		if (isPlayerInPotionY(p) == true && isPlayerInPotionX(p) == true ) {
+		//	System.out.println("vzimaiiiiiiiiii");
+			
+			
+			if (level.potions.get(p).type == 0) {
+				if (heroSpeed < 5) heroSpeed += 1;
+				System.out.println("Speed now is  "  + heroSpeed + "  max is 5");
+
+			}
+			if (level.potions.get(p).type == 1) {
+				if (Projectile.dmg < 50) Projectile.dmg += 10;
+			
+				System.out.println(" DMG now is " + Projectile.dmg + "  max is 50");
+			}
+			if (level.potions.get(p).type == 2){
+				if(hp < 150) hp += 25  ;
+			}
+			
+			if (level.potions.get(p).type == 3){
+				if(mana < 150) mana += 25;
+			}
+			
+			
+			level.potions.remove(p);
+		}
+	}
 }
+
+
+
+	public boolean isPlayerInPotionX(int n) {
+		boolean gotPotion = false;
+		if ( x > level.potions.get(n).px1 == true && x < level.potions.get(n).px2 == true) {
+			gotPotion = true;
+			//System.out.println("player X = "  + x + " POTION " + level.potions.get(n).px2);
+		}
+	return gotPotion ;
+	}
+
+	public boolean isPlayerInPotionY(int n) {
+		boolean gotPotion = false;
+		if ( y > level.potions.get(n).py2 == true && y < level.potions.get(n).py3 == true) {
+			gotPotion = true;
+			//System.out.println("player Y = "  + y + " POTION " + level.potions.get(n).py2);
+		}
+	return gotPotion ;
+	}
+
+
+
+}
+
+
+
+
+

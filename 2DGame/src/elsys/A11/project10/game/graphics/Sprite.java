@@ -34,7 +34,15 @@ public class Sprite {
 	
 	//Projectiles
 	public static Sprite projectile = new Sprite(16, 0, 2, SpriteSheet.sheet);
+	
+	// Potions
+	public static Sprite speedPotionSprite = new Sprite(16, 0, 4, SpriteSheet.sheet);
+	public static Sprite dmgPotionSprite = new Sprite(16, 1, 4, SpriteSheet.sheet);
+	public static Sprite hpPotionSprite = new Sprite(16, 2, 4, SpriteSheet.sheet);
+	public static Sprite manaPotionSprite = new Sprite(16, 3, 4, SpriteSheet.sheet);
 
+	
+	
 	public Sprite(int size, int x, int y, SpriteSheet sheet) {
 		this.SIZE = size;
 		this.x = x * size;

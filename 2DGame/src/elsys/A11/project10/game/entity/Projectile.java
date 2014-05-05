@@ -10,7 +10,7 @@ public class Projectile extends Entity {
 	private double nx, ny;
 	private int speed = 5	;
 	private int xMoved, yMoved;
-	private static int dmg = 20;
+	public static int dmg = 20;
 	private static int rateOfFire = 5;
 	private static int range = 500;
 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import elsys.A11.project10.game.entity.Entity;
+import elsys.A11.project10.game.entity.Potion;
 import elsys.A11.project10.game.entity.Projectile;
 import elsys.A11.project10.game.graphics.Sprite;
 
@@ -81,6 +82,12 @@ public abstract class Mob extends Entity {
 
 	}
 
+	public void spawnPotion(int x, int y, int type) {
+		Potion p = new Potion(x, y, type);
+		level.potions.add(p);
+	}
+
+	
 	public void createNpc(int x, int y) {
 		NPC e = new NPC(x, y);
 		level.npcs.add(e);

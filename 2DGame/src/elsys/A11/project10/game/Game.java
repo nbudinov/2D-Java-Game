@@ -47,7 +47,7 @@ public class Game extends Canvas implements Runnable {
 	private Level level;
 	private Player player;
 	private Mouse mouse;
-
+																	// nqma  MAIN clasa daje...  i nqmam ideq kvo stava
 	public synchronized void start() {
 		thread = new Thread(this, name);
 		thread.start();

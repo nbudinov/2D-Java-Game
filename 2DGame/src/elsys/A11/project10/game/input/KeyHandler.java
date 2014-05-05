@@ -6,7 +6,7 @@ import java.awt.event.KeyListener;
 public class KeyHandler implements KeyListener {
 
 	private boolean[] keys = new boolean[1000];
-	public boolean up, down, left, right, esc, space, shift;
+	public boolean up, down, left, right, esc, space, shift, P;
 
 	public void tick() {
 		up = keys[KeyEvent.VK_UP] || keys[KeyEvent.VK_W];
@@ -16,6 +16,7 @@ public class KeyHandler implements KeyListener {
 		esc =  keys[KeyEvent.VK_ESCAPE];
 		space = keys[KeyEvent.VK_SPACE];
 		shift = keys[KeyEvent.VK_SHIFT];
+		P = keys[KeyEvent.VK_P];
 	}
 
 	public void keyTyped(KeyEvent e) {
@@ -56,6 +57,10 @@ public class KeyHandler implements KeyListener {
 	
 	public boolean isShift() {
 		return shift;
+	}
+
+	public boolean isP() {
+		return P;
 	}
 
 

@@ -8,6 +8,7 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
+import elsys.A11.project10.game.entity.Potion;
 import elsys.A11.project10.game.entity.Projectile;
 import elsys.A11.project10.game.entity.mob.NPC;
 import elsys.A11.project10.game.graphics.Screen;
@@ -22,7 +23,9 @@ public class Level {
 	public int[] tiles;
 	public List<Projectile> projectiles = new ArrayList<Projectile>();
 	public List<NPC> npcs = new ArrayList<NPC>();
-
+	public List<Potion> potions = new ArrayList<Potion>();
+	
+	
 	// public Level(int width, int height) {
 	// this.width = width;
 	// this.height = height;
@@ -43,6 +46,9 @@ public class Level {
 		for (int i = 0; i < npcs.size(); i++) {
 			npcs.get(i).tick();
 		}
+		
+		
+		
 	}
 
 	public void loadLevel(String path) {
@@ -89,6 +95,10 @@ public class Level {
 		}
 		for (int i = 0; i < npcs.size(); i++) {
 			npcs.get(i).render(npcs.get(i).x, npcs.get(i).y, screen);
+		}
+		
+		for(int i = 0; i < potions.size(); i++) {
+			potions.get(i).render(potions.get(i).x ,  potions.get(i).y , screen);
 		}
 
 	}
