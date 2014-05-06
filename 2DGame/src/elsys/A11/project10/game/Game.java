@@ -3,37 +3,34 @@ package elsys.A11.project10.game;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
-
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
-
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
-
+import java.util.Random;
 
 import javax.swing.JFrame;
 
-
-
+import elsys.A11.project10.game.entity.mob.NPC;
 import elsys.A11.project10.game.entity.mob.Player;
 import elsys.A11.project10.game.graphics.Screen;
 import elsys.A11.project10.game.input.KeyHandler;
 import elsys.A11.project10.game.input.Mouse;
 import elsys.A11.project10.game.level.Level;
 
-
 public class Game extends Canvas implements Runnable {
 
 	private static final long serialVersionUID = 1L;
-	private static final int width = 300;
+	private static final int width = 400;
 	private static final int height = width / 16 * 9;
 	private static final int scale = 3;
 	private static final String name = "Game";
 
-	private int ix = 0;
-	private int iy = 0;
+	public static int ix = 0;
+	public static int iy = 0;
 
 	boolean running = false;
 
@@ -47,7 +44,7 @@ public class Game extends Canvas implements Runnable {
 	private Level level;
 	private Player player;
 	private Mouse mouse;
-												
+
 	public synchronized void start() {
 		thread = new Thread(this, name);
 		thread.start();
@@ -69,13 +66,14 @@ public class Game extends Canvas implements Runnable {
 		key = new KeyHandler();
 		level = new Level("/level.png");
 		mouse = new Mouse();
-		player = new Player(150, 150, key);
+		player = new Player(13 * 16, 150, key);
 		player.init(level);
 
 		addKeyListener(key);
 		addMouseListener(mouse);
 		addMouseMotionListener(mouse);
 		displayFrame();
+		setCoursor();
 	}
 
 	@Override
@@ -138,7 +136,7 @@ public class Game extends Canvas implements Runnable {
 		Graphics g = bs.getDrawGraphics();
 
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
-		if (level.npcs.size() > 0) chasePlayer(player.x, player.y, 2);
+		if (level.npcs.size() > 0) level.chasePlayer(player.x, player.y, 1.5);
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("Verdana", 0, 20));
 		// g.drawString("hp " + hp, 400, 400);
@@ -178,32 +176,23 @@ public class Game extends Canvas implements Runnable {
 
 	}
 
+	private void setCoursor() {
+		frame.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
+	}
+
 	private void endOfMapPlayerPos() {
 		// System.out.println("ix = " + (level.getMapWidth() - player.x) +
 		// " iy " + player.y);
-		if (player.x < screen.getWidth() / 2 && player.walking) ix = screen.getWidth() / 2 - player.x;
-		if (player.x > 128 * 16 - screen.getWidth() / 2 && player.walking) ix = -(screen.getWidth() / 2 - (level.getMapWidth() - player.x));
+		if (player.x < screen.getWidth() / 2 && player.walking)
+			ix = screen.getWidth() / 2 - player.x;
+		else if (player.x > 128 * 16 - screen.getWidth() / 2 && player.walking) ix = -(screen.getWidth() / 2 - (level.getMapWidth() - player.x));
+		// else ix = screen.getWidth() / 2;
 
 		if (player.y < screen.getHeight() / 2 && player.walking) iy = screen.getHeight() / 2 - player.y;
 		if (player.y > 128 * 16 - screen.getHeight() / 2 && player.walking) iy = -(screen.getHeight() / 2 - (level.getMapHeight() - player.y));
 	}
 
-	public void chasePlayer(int px, int py, int offset) {
-		for (int n = 0; n < level.npcs.size(); n++) {
-			if (level.npcs.get(n).x - px > 0)
-				level.npcs.get(n).xMove = -offset;
-			else if (level.npcs.get(n).x - px < 0)
-				level.npcs.get(n).xMove = offset;
-			else
-				level.npcs.get(n).xMove = 0;
-			if (level.npcs.get(n).y - py > 0)
-				level.npcs.get(n).yMove = -offset;
-			else if (level.npcs.get(n).y - py < 0)
-				level.npcs.get(n).yMove = offset;
-			else
-				level.npcs.get(n).yMove = 0;
-		}
-	}
+
 
 	public static int getWindowWidth() {
 		return width * scale;
@@ -212,6 +201,5 @@ public class Game extends Canvas implements Runnable {
 	public static int getWindowHeight() {
 		return height * scale;
 	}
-	
 
 }

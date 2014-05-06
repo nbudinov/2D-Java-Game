@@ -22,6 +22,11 @@ public class Sprite {
 	//npc
 	public static Sprite npcDead = new Sprite(16, 6, 14, SpriteSheet.sheet);
 	public static Sprite npcFrontStill = new Sprite(16, 4, 14, SpriteSheet.sheet);
+	public static Sprite npcMoveUp = new Sprite(16, 0, 14, SpriteSheet.sheet);
+	public static Sprite npcMoveDown = new Sprite(16, 1, 14, SpriteSheet.sheet);
+	public static Sprite npcSideStill = new Sprite(16, 2, 14, SpriteSheet.sheet);
+	public static Sprite npcBackStill = new Sprite(16, 4, 14, SpriteSheet.sheet);
+	public static Sprite npcMoveSide = new Sprite(16, 3, 14, SpriteSheet.sheet);
 
 	//Player	
 	public static Sprite playerDead = new Sprite(16, 6, 15, SpriteSheet.sheet);

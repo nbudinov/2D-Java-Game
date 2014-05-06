@@ -83,11 +83,12 @@ public abstract class Mob extends Entity {
 	}
 
 	public void spawnPotion(int x, int y, int type) {
-		Potion p = new Potion(x, y, type);
-		level.potions.add(p);
+		if (!collision(x, y) && !dieColl(x, y)) {
+			Potion p = new Potion(x, y, type);
+			level.potions.add(p);
+		}
 	}
 
-	
 	public void createNpc(int x, int y) {
 		NPC e = new NPC(x, y);
 		level.npcs.add(e);

@@ -24,8 +24,8 @@ public class Level {
 	public List<Projectile> projectiles = new ArrayList<Projectile>();
 	public List<NPC> npcs = new ArrayList<NPC>();
 	public List<Potion> potions = new ArrayList<Potion>();
-	
-	
+
+
 	// public Level(int width, int height) {
 	// this.width = width;
 	// this.height = height;
@@ -39,6 +39,7 @@ public class Level {
 	}
 
 	public void tick() {
+
 		for (int i = 0; i < projectiles.size(); i++) {
 			projectiles.get(i).tick();
 			removeProjectile(i);
@@ -46,9 +47,7 @@ public class Level {
 		for (int i = 0; i < npcs.size(); i++) {
 			npcs.get(i).tick();
 		}
-		
-		
-		
+
 	}
 
 	public void loadLevel(String path) {
@@ -62,8 +61,8 @@ public class Level {
 			// int w = image.getWidth();
 			// System.out.println(" W =" + width + " H = " + height);
 			tiles = new int[width * height];
-			mapWidth = width*16;
-			mapHeight = height*16;
+			mapWidth = width * 16;
+			mapHeight = height * 16;
 
 			image.getRGB(0, 0, width, height, tiles, 0, width);
 		} catch (IOException e) {
@@ -79,7 +78,7 @@ public class Level {
 		int x1 = (xScroll + screen.getWidth() + 16) / 16;
 		int y0 = yScroll / 16;
 		int y1 = (yScroll + screen.getHeight() + 16) / 16;
-		//System.out.println("xS = " + xScroll + "  yS = " + yScroll);
+		// System.out.println("xS = " + xScroll + "  yS = " + yScroll);
 
 		// System.out.println("x0 = " + x0 + " x1 = " + x1 + " y0 = " + y0 +
 		// " y1 = " + y1 );
@@ -90,15 +89,15 @@ public class Level {
 			}
 		}
 
+		for (int i = 0; i < npcs.size(); i++) {
+			npcs.get(i).render((int) npcs.get(i).x, (int) npcs.get(i).y, screen);
+		}
 		for (int i = 0; i < projectiles.size(); i++) {
 			projectiles.get(i).render(screen);
 		}
-		for (int i = 0; i < npcs.size(); i++) {
-			npcs.get(i).render(npcs.get(i).x, npcs.get(i).y, screen);
-		}
-		
-		for(int i = 0; i < potions.size(); i++) {
-			potions.get(i).render(potions.get(i).x ,  potions.get(i).y , screen);
+
+		for (int i = 0; i < potions.size(); i++) {
+			potions.get(i).render(potions.get(i).x, potions.get(i).y, screen);
 		}
 
 	}
@@ -119,6 +118,27 @@ public class Level {
 
 		return Tile.grass;
 	}
+
+	public void chasePlayer(int px, int py, double offset) {
+		for (int n = 0; n < npcs.size(); n++) {
+			int dx = Math.abs((int) npcs.get(n).x - px);
+			int dy = Math.abs((int) npcs.get(n).y - py);
+			// System.out.println(Math.sqrt( Math.pow(dx, 2) + Math.pow(dy, 2)
+			// ));
+			if (Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2)) < NPC.range) {
+				if (npcs.get(n).x > px)
+					npcs.get(n).xMove = -offset;
+				else if (npcs.get(n).x < px) npcs.get(n).xMove = offset;
+
+				if (npcs.get(n).y > py)
+					npcs.get(n).yMove = -offset;
+				else if (npcs.get(n).y < py) npcs.get(n).yMove = offset;
+
+			} else
+				this.npcs.get(n).mobRandomMovement(n);
+		}
+	}
+
 
 	private void removeProjectile(int i) {
 		if (projectiles.get(i).getxMoved() + projectiles.get(i).getyMoved() > Projectile.getRange()) projectiles.remove(i);

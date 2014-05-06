@@ -1,7 +1,7 @@
 package elsys.A11.project10.game.graphics;
 
 public class Screen {
-	private static int width, height;
+	private int width, height;
 	public int[] pixels;
 	public  int xOffset, yOffset;
 
@@ -61,7 +61,7 @@ public class Screen {
 		this.yOffset = yOffset;
 	}
 
-	public static int getHeight() {
+	public int getHeight() {
 		return height;
 	}
 

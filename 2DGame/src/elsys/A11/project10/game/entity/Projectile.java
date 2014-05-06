@@ -6,10 +6,9 @@ import elsys.A11.project10.game.graphics.Sprite;
 
 public class Projectile extends Entity {
 	public double x,y;
-	private double direction;
 	private Sprite sprite;
 	private double nx, ny;
-	private int speed = 5	;
+	private int speed = 10	;
 	private int xMoved, yMoved;
 	public static int dmg = 20;
 	private static int rateOfFire = 5;
@@ -18,7 +17,6 @@ public class Projectile extends Entity {
 	public Projectile(int x, int y, double direction) {
 		this.x = x;
 		this.y = y;
-		this.direction = direction;
 		
 		if(dmg == 20) sprite = Sprite.projectile;
 		if(dmg == 30) sprite = Sprite.projectile30;
@@ -29,7 +27,6 @@ public class Projectile extends Entity {
 		
 		nx = Math.cos(direction) * speed;
 		ny = Math.sin(direction) * speed;
-		System.out.println(ny);
 
 		//setDir(direction);
 	}
@@ -40,8 +37,6 @@ public class Projectile extends Entity {
 	}
 
 	private void move() {
-		//moveProjectile(Mouse.getMouseX(), Mouse.getMouseY(), speed);
-		//System.out.println(level.npcs.size());
 		x += nx;
 		y += ny;
 		xMoved+=1;

@@ -1,17 +1,25 @@
 package elsys.A11.project10.game.entity.mob;
 
+import java.util.Random;
 
 import elsys.A11.project10.game.graphics.Screen;
 import elsys.A11.project10.game.graphics.Sprite;
 
 public class NPC extends Mob {
-	public int xMove = 1;
-	public int yMove = 1;
-	private int offset = 13;
-	public int hbx1, hby1;
-	public int hbx2, hby2;
-	public int hbx3, hby3;
-	public int hbx4, hby4;
+	public double x, y;
+	public double xMove = 1;
+	public double yMove = 1;
+	public static final int range = 150;
+	private int offset = 10;
+	public double hbx1, hby1;
+	public double hbx2, hby2;
+	public double hbx3, hby3;
+	public double hbx4, hby4;
+	private int anim;
+	private boolean walking = false;
+	public double xRand = 1;
+	public double yRand = 1;
+	private int time;
 
 	public NPC(int x, int y) {
 		this.x = x;
@@ -20,12 +28,14 @@ public class NPC extends Mob {
 	}
 
 	public void tick() {
-
+		time++;
+		if (!endOfMapCollision((int) x, 0)) move((int) xMove, (int) yMove);
 		// System.out.println(" hbx1 "+hbx1+" hbx2 "+hbx2+" hxb3 "+ hbx3 +
 		// " hbx4 "+ hbx4);
 		// System.out.println(" hby1 "+hby1+" hby2 "+hby2+" hby3 "+ hby3 +
 		// " hby4 "+ hby4);
 		// System.out.println(hp);
+		anim++;
 		hbx1 = (x - offset);
 		hby1 = (y - offset);
 		hbx2 = (x + offset);
@@ -35,16 +45,75 @@ public class NPC extends Mob {
 		hbx4 = (x - offset);
 		hby4 = (y + offset);
 		if (!dead) {
+			if (xMove != 0 && yMove != 0) walking = true;
 			this.x += xMove;
 			this.y += yMove;
-		}
+		} else
+			walking = false;
 	}
 
 	public void render(int x, int y, Screen screen) {
-		if (!dead)
-			screen.renderPlayer(x, y, Sprite.npcFrontStill, true, false);
-		else
+		boolean pace = anim % 20 > 10;
+		if (!dead) {
+			if (walking) {
+
+				if (direction == 4 || direction == 5 || direction == 6) {
+					if (pace)
+						screen.renderPlayer(x, y, Sprite.npcMoveUp, false, false);
+					else
+						screen.renderPlayer(x, y, Sprite.npcMoveUp, true, false);
+				}
+				if (direction == 3 || direction == 7 || direction == 8) {
+					if (pace)
+						screen.renderPlayer(x, y, Sprite.npcMoveDown, false, false);
+					else
+						screen.renderPlayer(x, y, Sprite.npcMoveDown, true, false);
+				}
+				if (direction == 2) {
+					if (pace)
+						screen.renderPlayer(x, y, Sprite.npcSideStill, true, false);
+					else
+						screen.renderPlayer(x, y, Sprite.npcMoveSide, true, false);
+				}
+				if (direction == 1) {
+					if (pace)
+						screen.renderPlayer(x, y, Sprite.npcSideStill, false, false);
+					else
+						screen.renderPlayer(x, y, Sprite.npcMoveSide, false, false);
+				}
+			} else {
+
+				if (direction == 1) screen.renderPlayer(x, y, Sprite.npcSideStill, false, false);
+				if (direction == 2) screen.renderPlayer(x, y, Sprite.npcSideStill, true, false);
+				if (direction == 3 || direction == 7 || direction == 8) screen.renderPlayer(x, y, Sprite.npcFrontStill, true, false);
+				if (direction == 4 || direction == 5 || direction == 6) screen.renderPlayer(x, y, Sprite.npcBackStill, false, false);
+			}
+		} else
 			screen.renderPlayer(x, y, Sprite.npcDead, false, false);
+	}
+
+	public void move(int xDir, int yDir) {
+		// hp = 100;
+		// System.out.println(" x = " + x + " y = " + y);
+		if (xDir > 0) direction = 1;
+		if (xDir < 0) direction = 2;
+		if (yDir > 0) direction = 3;
+		if (yDir < 0) direction = 4;
+		if (yDir < 0 && xDir < 0) direction = 5;
+		if (yDir < 0 && xDir > 0) direction = 6;
+		if (yDir > 0 && xDir < 0) direction = 7;
+		if (yDir > 0 && xDir > 0) direction = 8;
+	}
+	
+	public void mobRandomMovement(int n) {
+		 if (time == 60) {
+		xRand = new Random().nextInt(3) - 1;
+		yRand = new Random().nextInt(3) - 1;
+		time = 0;
+		 }
+		xMove = xRand;
+		yMove = yRand;
+
 	}
 
 }
