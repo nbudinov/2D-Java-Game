@@ -25,13 +25,64 @@ public class Player extends Mob {
 		this.input = input;
 	}
 
+	public void spwnPot() {
+		int p = rand.nextInt(300 - 0) + 0;
+		int p1 = rand.nextInt(300 - 0) + 0;
+		
+		int type = rand.nextInt(4 - 0) + 0;
+		//System.out.println("type === "  + type);
+		if (level.potions.size() < 10 && !collision(p, p1)) spawnPotion(p, p1, type);
+		
+			
+	}
+	
+	public void spwnMob() {
+		
+	}
 	public void tick() {
 		double direction = Math.atan2((Mouse.getMouseY()-Game.getWindowHeight()/2), (Mouse.getMouseX()-Game.getWindowWidth()/2));
 		//System.out.println("direction " + direction +  " " + Math.toDegrees(direction));
 		if (rateOfFire > 0) rateOfFire--;
 		int xa = 0, ya = 0;
-		int offset = 4;
-		if (anim < 20)
+		int r, r1;
+		System.out.println("anim = " + anim);
+		
+	
+		int corner = rand.nextInt(4 - 0) + 0;
+		if(level.npcs.size() < 15) {
+			if(anim % 200 == 0) {
+				if(corner == 0) {
+					r = rand.nextInt(150 - 0) + 0;
+					r1 = rand.nextInt(150 - 0) + 0;
+					if (!collision(r, r1)) createNpc(r, r1);
+				}
+		
+				if(corner == 1) {
+					r = rand.nextInt(1900 - 1800) + 1800;
+					r1 = rand.nextInt(150 - 0) + 0;
+					if (!collision(r, r1)) createNpc(r, r1);
+				}
+				
+				if(corner == 2) {
+					r = rand.nextInt(150 - 0) + 0;
+					r1 = rand.nextInt(1900 - 1800) + 1800;
+					if (!collision(r, r1)) createNpc(r, r1);
+				}
+				
+				if(corner == 3) {
+					r = rand.nextInt(1900 - 1800) + 1800;
+					r1 = rand.nextInt(1900 - 1800) + 1800;
+					if (!collision(r, r1)) createNpc(r, r1);
+				}
+				
+			}
+		}
+		if(level.potions.size() < 3){
+			if (anim % 400 == 0) {
+				spwnPot();
+			}
+		}
+		if (anim < 60000)
 			anim++;
 		else
 			anim = 0;
@@ -43,13 +94,15 @@ public class Player extends Mob {
 			hp = 100;
 			mana = 100;
 			dead = false;
-			int r = rand.nextInt(200 - 0) + 0;
-			int r1 = rand.nextInt(200 - 0) + 0;
-			if (level.npcs.size() < 7 && !collision(r, r1)) createNpc(r, r1);
+			//int r = rand.nextInt(200 - 0) + 0;
+			//int r1 = rand.nextInt(200 - 0) + 0;
+			//if (level.npcs.size() < 7 && !collision(r, r1)) createNpc(r, r1);
 			// System.out.println(rand.nextInt(200-0)+0);
 
 		}
 
+		
+		
 		if (input.isP()) {
 			int p = rand.nextInt(300 - 0) + 0;
 			int p1 = rand.nextInt(300 - 0) + 0;
@@ -138,6 +191,7 @@ public class Player extends Mob {
 					level.npcs.get(n).hp -= Projectile.getDmg();
 					if (level.npcs.get(n).hp < 0) level.npcs.get(n).dead = true;
 					level.projectiles.remove(p);
+					//if(level.npcs.get(n).hp == 0) level.npcs.remove(n);
 					break;
 				}
 			}
