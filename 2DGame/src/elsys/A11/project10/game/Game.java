@@ -47,7 +47,7 @@ public class Game extends Canvas implements Runnable {
 	private Level level;
 	private Player player;
 	private Mouse mouse;
-																	// nqma  MAIN clasa daje...  i nqmam ideq kvo stava
+												
 	public synchronized void start() {
 		thread = new Thread(this, name);
 		thread.start();
@@ -81,7 +81,6 @@ public class Game extends Canvas implements Runnable {
 	@Override
 	public void run() {
 		long lastTime = System.nanoTime();
-		System.out.println("LASTTIME == " + lastTime);
 		final double ns = 1000000000.0 / 60;
 		long timer = System.currentTimeMillis();
 		double delta = 0;

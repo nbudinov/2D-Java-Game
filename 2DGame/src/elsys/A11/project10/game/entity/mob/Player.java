@@ -35,7 +35,6 @@ public class Player extends Mob {
 			anim++;
 		else
 			anim = 0;
-		// System.out.println(anim);
 		if (input.isUp()) ya -= heroSpeed;
 		if (input.isDown()) ya += heroSpeed;
 		if (input.isRight()) xa += heroSpeed;
@@ -188,7 +187,7 @@ public void getPotion() {
 			
 			if (level.potions.get(p).type == 0) {
 				if (heroSpeed < 5) heroSpeed += 1;
-				System.out.println("Speed now is  "  + heroSpeed + "  max is 5");
+				System.out.println("Speed now is  "  + heroSpeed );
 
 			}
 			if (level.potions.get(p).type == 1) {

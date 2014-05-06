@@ -1,5 +1,6 @@
 package elsys.A11.project10.game.entity;
 
+import elsys.A11.project10.game.entity.Entity;
 import elsys.A11.project10.game.graphics.Screen;
 import elsys.A11.project10.game.graphics.Sprite;
 
@@ -18,7 +19,13 @@ public class Projectile extends Entity {
 		this.x = x;
 		this.y = y;
 		this.direction = direction;
-		sprite = Sprite.projectile;
+		
+		if(dmg == 20) sprite = Sprite.projectile;
+		if(dmg == 30) sprite = Sprite.projectile30;
+		if(dmg == 40) sprite = Sprite.projectile40;
+		if(dmg == 50) sprite = Sprite.projectile50;
+		
+		
 		
 		nx = Math.cos(direction) * speed;
 		ny = Math.sin(direction) * speed;

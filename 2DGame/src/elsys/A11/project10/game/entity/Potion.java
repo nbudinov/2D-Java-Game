@@ -38,10 +38,7 @@ public class Potion extends Entity {
 		}
 	
 	public void render(int x, int y, Screen screen) {
-		//int r = rand.nextInt(2 - 0) + 0;
-		//System.out.println("r = " + r);
-		
-		screen.renderTile(x, y, sprite, false, false);
+			screen.renderTile(x, y, sprite, false, false);
 	}
 	
 	
