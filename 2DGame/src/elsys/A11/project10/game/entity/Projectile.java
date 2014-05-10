@@ -12,7 +12,7 @@ public class Projectile extends Entity {
 	private int xMoved, yMoved;
 	public static int dmg = 20;
 	private static int rateOfFire = 5;
-	private static int range = 500;
+	private static int range = 100;
 
 	public Projectile(int x, int y, double direction) {
 		this.x = x;

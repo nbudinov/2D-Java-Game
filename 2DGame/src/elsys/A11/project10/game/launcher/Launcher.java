@@ -1,4 +1,4 @@
-package elsys.A11.project10.game;
+package elsys.A11.project10.game.launcher;
 
 
 import java.awt.Dimension;
@@ -13,23 +13,24 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import elsys.A11.project10.game.Game;
+
 public class Launcher extends JFrame {
 
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 
-	private JPanel window = new JPanel();
+	protected JPanel window = new JPanel();
 	private JButton play, options, help, exit;
 	private Rectangle rplay, roptions, rhelp, rexit;
 
-	private int width = 240;
-	private int height = 320;
-	private int buttonWidth = 80;
-	private int buttonHeight = 40;
+	protected int width = 240;
+	protected int height = 320;
+	protected int buttonWidth = 80;
+	protected int buttonHeight = 40;
 
-	public Launcher() {
+
+	public Launcher(int id) {
 
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -46,7 +47,7 @@ public class Launcher extends JFrame {
 		setResizable(false);
 		setVisible(true);
 		window.setLayout(null);
-
+		if (id == 0)
 		drawButtons();
 
 	}
@@ -54,9 +55,8 @@ public class Launcher extends JFrame {
 	private void drawButtons() {
 		
 		createPlayButton(50);
-		createOptionsButton(100);
-		createHelpButton(150);
-		createExitButton(200);
+		createHelpButton(100);
+		createExitButton(150);
 
 		play.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -68,15 +68,12 @@ public class Launcher extends JFrame {
 			}
 		});
 
-		options.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("Options");
-			}
-		});
 		
 		help.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Help");
+				Help help = new Help();
+				
+				dispose();
 
 			}
 		});
@@ -122,10 +119,10 @@ public class Launcher extends JFrame {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				Launcher ex = new Launcher();
-				ex.setVisible(true);
+				new Launcher(0);
 			}
 		});
 
 	}
+
 }

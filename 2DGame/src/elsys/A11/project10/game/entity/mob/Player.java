@@ -26,7 +26,7 @@ public class Player extends Mob {
 	}
 
 	public void tick() {
-		double direction = Math.atan2((Mouse.getMouseY() - Game.getWindowHeight() / 2), (Mouse.getMouseX() - Game.getWindowWidth() / 2));
+		double direction = Math.atan2((Mouse.getMouseY() - Game.getWindowHeight() / 2+(Game.iy*Game.getScale())), (Mouse.getMouseX() - Game.getWindowWidth() / 2+(Game.ix*Game.getScale())));
 		// System.out.println(((Mouse.getMouseX()-Game.getWindowWidth()/2) +
 		// Math.abs(Game.ix)));
 		if (rateOfFire > 0) rateOfFire--;
@@ -184,7 +184,7 @@ public class Player extends Mob {
 
 	private void hurtPlayer() {
 		if (level.npcs.size() > 0) for (int n = 0; n < level.npcs.size(); n++) {
-			if (!level.npcs.get(n).dead) if (isNpcInPlayerX(n) && isNpcInPlayerY(n)) reduceHp();
+			if (!level.npcs.get(n).dead) if (isNpcInPlayerX(n) && isNpcInPlayerY(n)) hp-=2;
 			if (hp < 0) {
 				hp = 0;
 				dead = true;

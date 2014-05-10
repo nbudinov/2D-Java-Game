@@ -3,6 +3,7 @@ package elsys.A11.project10.game;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -10,11 +11,9 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
-import java.util.Random;
 
 import javax.swing.JFrame;
 
-import elsys.A11.project10.game.entity.mob.NPC;
 import elsys.A11.project10.game.entity.mob.Player;
 import elsys.A11.project10.game.graphics.Screen;
 import elsys.A11.project10.game.input.KeyHandler;
@@ -24,8 +23,8 @@ import elsys.A11.project10.game.level.Level;
 public class Game extends Canvas implements Runnable {
 
 	private static final long serialVersionUID = 1L;
-	private static final int width = 400;
-	private static final int height = width / 16 * 9;
+	private static int width = 400;
+	private static int height = width / 16 * 9;
 	private static final int scale = 3;
 	private static final String name = "Game";
 
@@ -44,6 +43,7 @@ public class Game extends Canvas implements Runnable {
 	private Level level;
 	private Player player;
 	private Mouse mouse;
+	Container pane;
 
 	public synchronized void start() {
 		thread = new Thread(this, name);
@@ -68,7 +68,7 @@ public class Game extends Canvas implements Runnable {
 		mouse = new Mouse();
 		player = new Player(13 * 16, 150, key);
 		player.init(level);
-
+		pane = frame.getContentPane();
 		addKeyListener(key);
 		addMouseListener(mouse);
 		addMouseMotionListener(mouse);
@@ -137,8 +137,6 @@ public class Game extends Canvas implements Runnable {
 
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 		if (level.npcs.size() > 0) level.chasePlayer(player.x, player.y, 1.5);
-		g.setColor(Color.WHITE);
-		g.setFont(new Font("Verdana", 0, 20));
 		// g.drawString("hp " + hp, 400, 400);
 		displayHealth(g);
 		g.dispose();
@@ -166,7 +164,7 @@ public class Game extends Canvas implements Runnable {
 	private void displayHealth(Graphics g) {
 		g.setFont(new Font("Verdana", 0, 10));
 		g.setColor(Color.RED);
-		g.fillRect(width * scale - 100, 0, player.hp, 25);
+		g.fillRect(width * scale - 100, 0, (int) player.hp, 25);
 		g.setColor(Color.WHITE);
 		g.drawString("hp " + player.hp, width * scale - 75, 15);
 		g.setColor(Color.BLUE);
@@ -181,18 +179,20 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	private void endOfMapPlayerPos() {
-		// System.out.println("ix = " + (level.getMapWidth() - player.x) +
+		//System.out.println("ix" + ix);
 		// " iy " + player.y);
+		System.out.println("game " + this.getWindowWidth() + " screen " + screen.getWidth() + "game " + this.getWindowHeight() + " screen " + screen.getHeight());
 		if (player.x < screen.getWidth() / 2 && player.walking)
 			ix = screen.getWidth() / 2 - player.x;
-		else if (player.x > 128 * 16 - screen.getWidth() / 2 && player.walking) ix = -(screen.getWidth() / 2 - (level.getMapWidth() - player.x));
+		else if (player.x > 128 * 16 - screen.getWidth() / 2 && player.walking) 
+			ix = -(screen.getWidth() / 2 - (level.getMapWidth() - player.x));
 		// else ix = screen.getWidth() / 2;
 
-		if (player.y < screen.getHeight() / 2 && player.walking) iy = screen.getHeight() / 2 - player.y;
-		if (player.y > 128 * 16 - screen.getHeight() / 2 && player.walking) iy = -(screen.getHeight() / 2 - (level.getMapHeight() - player.y));
+		if (player.y < screen.getHeight() / 2 && player.walking) 
+			iy = screen.getHeight() / 2 - player.y;
+		else if (player.y > 128 * 16 - screen.getHeight() / 2 && player.walking) 
+			iy = -(screen.getHeight() / 2 - (level.getMapHeight() - player.y));
 	}
-
-
 
 	public static int getWindowWidth() {
 		return width * scale;
@@ -200,6 +200,10 @@ public class Game extends Canvas implements Runnable {
 
 	public static int getWindowHeight() {
 		return height * scale;
+	}
+	
+	public static int getScale() {
+		return scale;
 	}
 
 }

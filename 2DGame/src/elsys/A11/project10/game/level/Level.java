@@ -24,7 +24,9 @@ public class Level {
 	public List<Projectile> projectiles = new ArrayList<Projectile>();
 	public List<NPC> npcs = new ArrayList<NPC>();
 	public List<Potion> potions = new ArrayList<Potion>();
-
+	// public static int time = 0;
+	public double xRand = 1;
+	public double yRand = 1;
 
 	// public Level(int width, int height) {
 	// this.width = width;
@@ -39,7 +41,6 @@ public class Level {
 	}
 
 	public void tick() {
-
 		for (int i = 0; i < projectiles.size(); i++) {
 			projectiles.get(i).tick();
 			removeProjectile(i);
@@ -123,23 +124,39 @@ public class Level {
 		for (int n = 0; n < npcs.size(); n++) {
 			int dx = Math.abs((int) npcs.get(n).x - px);
 			int dy = Math.abs((int) npcs.get(n).y - py);
-			// System.out.println(Math.sqrt( Math.pow(dx, 2) + Math.pow(dy, 2)
-			// ));
+			// boolean test = Math.sqrt(Math.pow(Math.abs((int) npcs.get(0).x -
+			// px), 2) + Math.pow(Math.abs((int) npcs.get(0).y - py), 2)) <
+			// NPC.range;
+			// System.out.println(test);
+			//System.out.println((Math.sqrt(Math.pow(Math.abs((int) npcs.get(0).x - px), 2) + Math.pow(Math.abs((int) npcs.get(0).y - py), 2))));
 			if (Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2)) < NPC.range) {
+				npcs.get(n).time = 0;
 				if (npcs.get(n).x > px)
 					npcs.get(n).xMove = -offset;
 				else if (npcs.get(n).x < px) npcs.get(n).xMove = offset;
+				else npcs.get(n).xMove = 0;
 
 				if (npcs.get(n).y > py)
 					npcs.get(n).yMove = -offset;
 				else if (npcs.get(n).y < py) npcs.get(n).yMove = offset;
+				else npcs.get(n).yMove = 0;
+				
+				//if (npcs.get(n).x == px) npcs.get(n).yMove = 0; 
+				//if (npcs.get(n).y == py) npcs.get(n).xMove = 0;
 
-			} else
-				this.npcs.get(n).mobRandomMovement(n);
+			} else {
+				npcs.get(n).mobRandomMovement(n);
+			}
 		}
 	}
 
-
+	/*
+	 * public void mobRandomMovement(int n) { if (time == 60) { xRand = new
+	 * Random().nextInt(3) - 1; yRand = new Random().nextInt(3) - 1; time = 0; }
+	 * npcs.get(n).xMove = xRand; npcs.get(n).yMove = yRand;
+	 * 
+	 * }
+	 */
 	private void removeProjectile(int i) {
 		if (projectiles.get(i).getxMoved() + projectiles.get(i).getyMoved() > Projectile.getRange()) projectiles.remove(i);
 	}

@@ -1,15 +1,17 @@
 package elsys.A11.project10.game.entity.mob;
 
+
 import java.util.Random;
 
 import elsys.A11.project10.game.graphics.Screen;
 import elsys.A11.project10.game.graphics.Sprite;
+import elsys.A11.project10.game.level.Level;
 
 public class NPC extends Mob {
 	public double x, y;
-	public double xMove = 1;
-	public double yMove = 1;
-	public static final int range = 150;
+	public double xMove = 3;
+	public double yMove = 3;
+	public static final int range = 200;
 	private int offset = 10;
 	public double hbx1, hby1;
 	public double hbx2, hby2;
@@ -17,9 +19,8 @@ public class NPC extends Mob {
 	public double hbx4, hby4;
 	private int anim;
 	private boolean walking = false;
-	public double xRand = 1;
-	public double yRand = 1;
-	private int time;
+	int xRand = 1, yRand = 1;
+	public int time;
 
 	public NPC(int x, int y) {
 		this.x = x;
@@ -28,8 +29,9 @@ public class NPC extends Mob {
 	}
 
 	public void tick() {
-		time++;
-		if (!endOfMapCollision((int) x, 0)) move((int) xMove, (int) yMove);
+		time ++;
+		move((int)xMove, (int) yMove);
+
 		// System.out.println(" hbx1 "+hbx1+" hbx2 "+hbx2+" hxb3 "+ hbx3 +
 		// " hbx4 "+ hbx4);
 		// System.out.println(" hby1 "+hby1+" hby2 "+hby2+" hby3 "+ hby3 +
@@ -45,9 +47,12 @@ public class NPC extends Mob {
 		hbx4 = (x - offset);
 		hby4 = (y + offset);
 		if (!dead) {
-			if (xMove != 0 && yMove != 0) walking = true;
-			this.x += xMove;
-			this.y += yMove;
+			if (xMove != 0 && yMove != 0)
+				walking = true;
+			else
+				walking = false;
+			if (!endOfMapCollision(((int) x + (int) xMove), 0)) this.x += xMove;
+			if (!endOfMapCollision(0, ((int) y + (int) yMove))) this.y += yMove;
 		} else
 			walking = false;
 	}
@@ -91,10 +96,10 @@ public class NPC extends Mob {
 		} else
 			screen.renderPlayer(x, y, Sprite.npcDead, false, false);
 	}
-
+	
 	public void move(int xDir, int yDir) {
-		// hp = 100;
-		// System.out.println(" x = " + x + " y = " + y);
+		if (endOfMapCollision((int) x + 10, 0)) xMove = 0;
+		if (endOfMapCollision((int) 0, (int) y + 10)) yMove = 0;
 		if (xDir > 0) direction = 1;
 		if (xDir < 0) direction = 2;
 		if (yDir > 0) direction = 3;
@@ -106,14 +111,16 @@ public class NPC extends Mob {
 	}
 	
 	public void mobRandomMovement(int n) {
-		 if (time == 60) {
-		xRand = new Random().nextInt(3) - 1;
-		yRand = new Random().nextInt(3) - 1;
-		time = 0;
-		 }
+		if (time == 60) {
+			xRand = new Random().nextInt(3) - 1;
+			yRand = new Random().nextInt(3) - 1;
+			time = 0;
+		}
 		xMove = xRand;
 		yMove = yRand;
+		//System.out.println(time);
 
 	}
+	
 
 }
