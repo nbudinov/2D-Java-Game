@@ -39,11 +39,14 @@ public class Sprite {
 	
 	//Projectiles
 	public static Sprite projectile = new Sprite(16, 0, 2, SpriteSheet.sheet);
-	public static Sprite projectile30 = new Sprite(16, 1, 2, SpriteSheet.sheet);
-	public static Sprite projectile40 = new Sprite(16, 2, 2, SpriteSheet.sheet);
-	public static Sprite projectile50 = new Sprite(16, 3, 2, SpriteSheet.sheet);
+	public static Sprite projectile20 = new Sprite(16, 1, 2, SpriteSheet.sheet);
+	public static Sprite projectile30 = new Sprite(16, 2, 2, SpriteSheet.sheet);
+	public static Sprite projectile40 = new Sprite(16, 3, 2, SpriteSheet.sheet);
+	public static Sprite projectile50 = new Sprite(16, 4, 2, SpriteSheet.sheet);
+	public static Sprite projectileMax = new Sprite(16, 5, 2, SpriteSheet.sheet);
 
-	
+
+
 	// Potions
 	public static Sprite speedPotionSprite = new Sprite(16, 0, 4, SpriteSheet.sheet);
 	public static Sprite dmgPotionSprite = new Sprite(16, 1, 4, SpriteSheet.sheet);

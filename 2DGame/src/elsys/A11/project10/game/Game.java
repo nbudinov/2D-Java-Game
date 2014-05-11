@@ -14,6 +14,7 @@ import java.awt.image.DataBufferInt;
 
 import javax.swing.JFrame;
 
+import elsys.A11.project10.game.entity.Projectile;
 import elsys.A11.project10.game.entity.mob.Player;
 import elsys.A11.project10.game.graphics.Screen;
 import elsys.A11.project10.game.input.KeyHandler;
@@ -136,7 +137,7 @@ public class Game extends Canvas implements Runnable {
 		Graphics g = bs.getDrawGraphics();
 
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
-		if (level.npcs.size() > 0) level.chasePlayer(player.x, player.y, 1.5);
+		if (level.npcs.size() > 0) level.chasePlayer(player.x, player.y, player.spdNPC);
 		// g.drawString("hp " + hp, 400, 400);
 		displayHealth(g);
 		g.dispose();
@@ -161,18 +162,82 @@ public class Game extends Canvas implements Runnable {
 
 	}
 
-	private void displayHealth(Graphics g) {
-		g.setFont(new Font("Verdana", 0, 10));
-		g.setColor(Color.RED);
-		g.fillRect(width * scale - 100, 0, (int) player.hp, 25);
-		g.setColor(Color.WHITE);
-		g.drawString("hp " + player.hp, width * scale - 75, 15);
-		g.setColor(Color.BLUE);
-		g.fillRect(width * scale - 100, 25, player.mana, 25);
-		g.setColor(Color.WHITE);
-		g.drawString("mana " + player.mana, width * scale - 75, 40);
+		private void displayHealth(Graphics g) {
+			g.setFont(new Font("Verdana", 0, 10));
+		
+			g.setColor(Color.RED);
+			g.fillRect(width * scale - 100, 0, (int) player.hp, 25);
+			g.setColor(Color.WHITE);
+			g.drawString("hp " + player.hp, width * scale - 75, 15);
+			
+			g.setColor(Color.BLUE);
+			g.fillRect(width * scale - 100, 25, player.mana, 25);
+			g.setColor(Color.WHITE);
+			g.drawString("mana " + player.mana, width * scale - 75, 40);
 
-	}
+			Color clr = new Color(150, 110, 110);
+			g.setColor(clr);
+			g.fillRect(0, height * scale - 50 ,  width * scale , 10 );
+			
+			Color clr1 = new Color(150, 0, 110);
+			g.setColor(clr1);
+			g.fillRect( 0, height * scale - 50 ,  player.xp / (player.neededXP / (width * scale) )  , 10 );
+			g.setColor(Color.WHITE);
+			g.drawString( player.xp + " / " + player.neededXP + " XP " , width * scale - ((width * scale)/2) , height * scale - 42  );
+
+			Color clr2 = new Color(0f, .3f, .5f, .4f);
+			g.setColor(clr2);
+			g.fillRect( 180, 0 ,  width * scale - 800 , 40 );
+			
+			g.setColor(Color.ORANGE);
+			g.fillRect(width * scale - 1000, height * scale - (height * scale - 10), 100, 25);
+			g.setColor(Color.BLACK);
+			g.drawString("Dmg: " + Projectile.dmg, width * scale - 975, 25);
+
+			g.setColor(Color.YELLOW);
+			g.fillRect(width * scale - 875, height * scale - (height * scale - 10), 100, 25);
+			g.setColor(Color.BLACK);
+			g.drawString("Spd: " + player.heroSpeed + "/" + player.maxHeroSpeed, width * scale - 850, 25);
+
+			Color clr4 = new Color(.0f, .5f, .8f, .9f);
+			g.setColor(clr4);
+			g.fillRect(width * scale - 750, height * scale - (height * scale - 10), 100, 25);
+			g.setColor(Color.WHITE);
+			g.drawString("ManaReg: " + player.regenerateMana + "ps", width * scale - 750, 25);
+
+			g.setColor(clr2);
+			g.fillRect( 650, 0 ,  width * scale - 840 , 40 );
+			
+			Color clr6 = new Color(1f, .5f, .0f, .9f);
+			g.setColor(clr6);
+			g.fillRect(width * scale - 540, height * scale - (height * scale - 10), 100, 25);
+			g.setColor(Color.WHITE);
+			g.drawString("NpcsHp: " + player.hpNPC, width * scale - 525, 25);
+
+			Color clr7 = new Color(.7f, .8f, .0f, .9f);
+			g.setColor(clr7);
+			g.fillRect(width * scale - 420, height * scale - (height * scale - 10), 100, 25);
+			g.setColor(Color.WHITE);
+			g.drawString("NpcsDmg: " + player.dmgNPC , width * scale - 410, 25);
+
+			Color clr8 = new Color(.9f, .9f, .2f, .9f);
+			g.setColor(clr8);
+			g.fillRect(width * scale - 300, height * scale - (height * scale - 10), 100, 25);
+			g.setColor(Color.WHITE);
+			g.drawString("NpcsSpd: " + player.spdNPC , width * scale - 290, 25);
+
+			
+			g.setFont(new Font("Verdana", 3, 24));
+
+			Color clr3 = new Color(.0f, .5f, .8f, .6f);
+			g.setColor(clr3);
+			g.fillOval(-30, -20, 150, 90);
+
+			g.setColor(Color.ORANGE);
+			g.drawString(" LVL " + player.heroLvl, 15, 35 );
+
+		}
+
 
 	private void setCoursor() {
 		frame.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
@@ -181,7 +246,7 @@ public class Game extends Canvas implements Runnable {
 	private void endOfMapPlayerPos() {
 		//System.out.println("ix" + ix);
 		// " iy " + player.y);
-		System.out.println("game " + this.getWindowWidth() + " screen " + screen.getWidth() + "game " + this.getWindowHeight() + " screen " + screen.getHeight());
+		//System.out.println("game " + this.getWindowWidth() + " screen " + screen.getWidth() + "game " + this.getWindowHeight() + " screen " + screen.getHeight());
 		if (player.x < screen.getWidth() / 2 && player.walking)
 			ix = screen.getWidth() / 2 - player.x;
 		else if (player.x > 128 * 16 - screen.getWidth() / 2 && player.walking) 

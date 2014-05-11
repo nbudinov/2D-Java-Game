@@ -55,12 +55,8 @@ public class Level {
 		BufferedImage image = null;
 		try {
 			image = ImageIO.read(Level.class.getResource(path));
-			// System.out.println(" IMG === " + image);
 			width = image.getWidth();
 			height = image.getHeight();
-			// int h = image.getHeight();
-			// int w = image.getWidth();
-			// System.out.println(" W =" + width + " H = " + height);
 			tiles = new int[width * height];
 			mapWidth = width * 16;
 			mapHeight = height * 16;
@@ -79,13 +75,9 @@ public class Level {
 		int x1 = (xScroll + screen.getWidth() + 16) / 16;
 		int y0 = yScroll / 16;
 		int y1 = (yScroll + screen.getHeight() + 16) / 16;
-		// System.out.println("xS = " + xScroll + "  yS = " + yScroll);
 
-		// System.out.println("x0 = " + x0 + " x1 = " + x1 + " y0 = " + y0 +
-		// " y1 = " + y1 );
 		for (int y = y0; y < y1; y++) {
 			for (int x = x0; x < x1; x++) {
-				// System.out.println("y = " + y0 + " x = " + x0 );
 				getTile(x, y).render(x, y, screen);
 			}
 		}
@@ -104,8 +96,6 @@ public class Level {
 	}
 
 	public Tile getTile(int x, int y) {
-		// System.out.println(" X = " + x + " Y = " + y + " W = " + width +
-		// " H = " + height);
 		if (x < 0 || y < 0 || x >= width || y >= height) return Tile.voidTile;
 		if (tiles[x + y * width] == 0xff00ff00) return Tile.grass;
 		if (tiles[x + y * width] == 0xffffff00) return Tile.flower;

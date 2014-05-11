@@ -16,6 +16,10 @@ public abstract class Mob extends Entity {
 	public int mana = 100;
 	public boolean dead = false;
 	int pace = 0;
+	public int regenerateMana = 1;
+	public int hpNPC = 100;
+	public int dmgNPC = 1;
+	public double spdNPC = 1.5;
 
 	public List<Projectile> projectiles = new ArrayList<Projectile>();
 
@@ -129,7 +133,7 @@ public abstract class Mob extends Entity {
 		pace++;
 		// System.out.println(pace);
 		if (pace == 5) {
-			mana++;
+			mana += regenerateMana;
 			pace = 0;
 		}
 		if (mana >= 100) mana = 100;

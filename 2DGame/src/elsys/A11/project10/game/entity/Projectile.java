@@ -10,7 +10,7 @@ public class Projectile extends Entity {
 	private double nx, ny;
 	private int speed = 10	;
 	private int xMoved, yMoved;
-	public static int dmg = 20;
+	public static int dmg = 10;
 	private static int rateOfFire = 5;
 	private static int range = 100;
 
@@ -18,10 +18,12 @@ public class Projectile extends Entity {
 		this.x = x;
 		this.y = y;
 		
-		if(dmg == 20) sprite = Sprite.projectile;
-		if(dmg == 30) sprite = Sprite.projectile30;
-		if(dmg == 40) sprite = Sprite.projectile40;
-		if(dmg == 50) sprite = Sprite.projectile50;
+		if(dmg >= 10) sprite = Sprite.projectile;
+		if(dmg >= 20) sprite = Sprite.projectile20;
+		if(dmg >= 30) sprite = Sprite.projectile30;
+		if(dmg >= 40) sprite = Sprite.projectile40;
+		if(dmg >= 50) sprite = Sprite.projectile50;
+		if(dmg >= 100) sprite = Sprite.projectileMax;
 		
 		
 		
