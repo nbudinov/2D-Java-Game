@@ -17,7 +17,6 @@ public class Player extends Mob {
 	private int rateOfFire = Projectile.getRateOfFire();
 	Random rand = new Random();
 
-	
 	public int xp = 0;
 	public int heroLvl = 1;
 	public double heroSpeed = 2;
@@ -28,7 +27,6 @@ public class Player extends Mob {
 	public int neededXP = 1200;
 	public int givenXP = 400;
 
-
 	public Player(int x, int y, KeyHandler input) {
 		this.x = x;
 		this.y = y;
@@ -36,30 +34,18 @@ public class Player extends Mob {
 	}
 
 	public void tick() {
-		double direction = Math.atan2((Mouse.getMouseY() - Game.getWindowHeight() / 2+(Game.iy*Game.getScale())), (Mouse.getMouseX() - Game.getWindowWidth() / 2+(Game.ix*Game.getScale())));
-		// System.out.println(((Mouse.getMouseX()-Game.getWindowWidth()/2) +
-		// Math.abs(Game.ix)));
+		double direction = Math.atan2((Mouse.getMouseY() - Game.getWindowHeight() / 2 + (Game.iy * Game.getScale())), (Mouse.getMouseX() - Game.getWindowWidth() / 2 + (Game.ix * Game.getScale())) - 15);
 		if (rateOfFire > 0) rateOfFire--;
 		int xa = 0, ya = 0;
-		int r, r1;
-		// System.out.println("anim = " + anim);
 
-		if (level.npcs.size() < 50) {
-			if (anim % 10 == 0) {
-				r = 0 + (int) (Math.random() * ((128 * 16 - 0) + 1));
-				r1 = 0 + (int) (Math.random() * ((128 * 16 - 0) + 1));
-				if (!collision(r, r1) && !dieColl(r,r1)) createNpc(r, r1);
-				for (int i = 0; i < level.npcs.size(); i++)
-					if (level.npcs.get(i).dead) level.npcs.get(i).remove();
+		if (anim == 60) {
+			spawnNpc();
+		}
 
-			}
+		if (anim == 180) {
+			spwnPot();
 		}
-		if (level.potions.size() < 10) {
-			if (anim % 200 == 0) {
-				spwnPot();
-			}
-		}
-		if (anim < 401)
+		if (anim < 420)
 			anim++;
 		else
 			anim = 0;
@@ -71,20 +57,6 @@ public class Player extends Mob {
 			hp = maxHP;
 			mana = 100;
 			dead = false;
-			// int r = rand.nextInt(200 - 0) + 0;
-			// int r1 = rand.nextInt(200 - 0) + 0;
-			// if (level.npcs.size() < 7 && !collision(r, r1)) createNpc(r, r1);
-			// System.out.println(rand.nextInt(200-0)+0);
-
-		}
-
-		if (input.isP()) {
-			int p = rand.nextInt(300 - 0) + 0;
-			int p1 = rand.nextInt(300 - 0) + 0;
-
-			int type = rand.nextInt(4 - 0) + 0;
-			// System.out.println("type === " + type);
-			if (level.potions.size() < 10 && !collision(p, p1)) spawnPotion(p, p1, type);
 
 		}
 
@@ -107,8 +79,6 @@ public class Player extends Mob {
 		hurtNpc();
 		hurtPlayer();
 		increaseMana();
-		// System.out.println("proj size" + level.projectiles.size());
-		// System.out.println("npc size" + level.npcs.size());
 	}
 
 	public void render(Screen screen) {
@@ -153,17 +123,27 @@ public class Player extends Mob {
 		}
 	}
 
-	public void spwnPot() {
-		int p = rand.nextInt(128 * 16 - 0) + 0;
-		int p1 = rand.nextInt(128 * 16 - 0) + 0;
+	private void spawnNpc() {
+		int r, r1;
+		if (level.npcs.size() < 20) {
+			r = 0 + (int) (Math.random() * ((128 * 16 - 0) + 1));
+			r1 = 0 + (int) (Math.random() * ((128 * 16 - 0) + 1));
+			if (!collision(r, r1) && !dieColl(r, r1)) createNpc(r, r1);
 
-		int type = rand.nextInt(4 - 0) + 0;
-		// System.out.println("type === " + type);
-		if (level.potions.size() < 10 && !collision(p, p1)) spawnPotion(p, p1, type);
-
+		}
 	}
 
-	
+	public void spwnPot() {
+		if (level.potions.size() < 10) {
+			int p = rand.nextInt(128 * 16 - 0) + 0;
+			int p1 = rand.nextInt(128 * 16 - 0) + 0;
+
+			int type = rand.nextInt(4 - 0) + 0;
+			// System.out.println("type === " + type);
+			if (level.potions.size() < 10 && !collision(p, p1)) spawnPotion(p, p1, type);
+		}
+
+	}
 
 	private void hurtNpc() {
 		int n = 0;
@@ -171,7 +151,7 @@ public class Player extends Mob {
 			for (n = 0; n < level.npcs.size(); n++) {
 				if (!level.npcs.get(n).dead) if (isProjInNpcX(p, n) && isProjInNpcY(p, n)) {
 					level.npcs.get(n).hp -= Projectile.getDmg();
-					if (level.npcs.get(n).hp < 0){
+					if (level.npcs.get(n).hp < 0) {
 						level.npcs.get(n).dead = true;
 						incXpAndLvl();
 					}
@@ -183,11 +163,10 @@ public class Player extends Mob {
 		}
 	}
 
-
 	public void incXpAndLvl() {
 		xp += givenXP;
-		
-		if(xp >= neededXP && lvlCheck == 2){
+
+		if (xp >= neededXP && lvlCheck == 2) {
 			heroLvl = 2;
 			xp = 0;
 			lvlCheck = 3;
@@ -195,8 +174,7 @@ public class Player extends Mob {
 			incNeededXP();
 			incNpcHpDmgSpd();
 			incGivenXP();
-		}
-		if(xp >= neededXP && lvlCheck == 3) {
+		} else if (xp >= neededXP && lvlCheck == 3) {
 			heroLvl = 3;
 			incStats();
 			xp = 0;
@@ -204,8 +182,7 @@ public class Player extends Mob {
 			incNeededXP();
 			incNpcHpDmgSpd();
 			incGivenXP();
-		}
-		if(xp >= neededXP && lvlCheck == 4) {
+		} else if (xp >= neededXP && lvlCheck == 4) {
 			heroLvl = 4;
 			incStats();
 			xp = 0;
@@ -213,27 +190,26 @@ public class Player extends Mob {
 			lvlCheck = 5;
 			incNpcHpDmgSpd();
 			incGivenXP();
-		}
-		if(xp >= neededXP && lvlCheck == 5) {
+		} else if (xp >= neededXP && lvlCheck == 5) {
 			heroLvl = 5;
 			incStats();
 			incNpcHpDmgSpd();
 			incNpcHpDmgSpd();
-			//incNeededXP();
+			// incNeededXP();
 			lvlCheck = 6;
 		}
 	}
-	
+
 	public void incNpcHpDmgSpd() {
 		hpNPC += 50;
-		for (int i = 0; i < level.npcs.size(); i++){
+		for (int i = 0; i < level.npcs.size(); i++) {
 			level.npcs.get(i).hp = hpNPC;
-			//System.out.println("it is " + level.npcs.get(i).hp  );
+			// System.out.println("it is " + level.npcs.get(i).hp );
 		}
 		dmgNPC += 1;
 		spdNPC += 0.2;
 	}
-	
+
 	public void incStats() {
 		heroSpeed += 0.5;
 		maxHeroSpeed += 1;
@@ -246,38 +222,21 @@ public class Player extends Mob {
 	public void incNeededXP() {
 		neededXP *= 2;
 	}
-	
-	public void incGivenXP(){
+
+	public void incGivenXP() {
 		givenXP += 200;
 	}
-	
-	/*public void whenDie() {			// not used yet
-		if(heroLvl > 1) {
-			if(dead == true) {
-				xp -= 400;
-				if(xp <= 0) {
-					heroLvl--;
-					reduceStats();
-					//System.out.println("U dyed! Lvl and stats reduced");
-					xp = 0;
-					dead = false;
-				}
-			}
-		}
-	}
-	
-	public void reduceStats() {
-		heroSpeed -= 0.5;
-		maxHeroSpeed -= 1;
-		Projectile.dmg -= 10;
-		maxDmg -= 20;
-		maxHP -= 25;
-		regenerateMana -= 0.5;
-	}
-	*/
-	
-	
-	
+
+	/*
+	 * public void whenDie() { // not used yet if(heroLvl > 1) { if(dead ==
+	 * true) { xp -= 400; if(xp <= 0) { heroLvl--; reduceStats();
+	 * //System.out.println("U dyed! Lvl and stats reduced"); xp = 0; dead =
+	 * false; } } } }
+	 * 
+	 * public void reduceStats() { heroSpeed -= 0.5; maxHeroSpeed -= 1;
+	 * Projectile.dmg -= 10; maxDmg -= 20; maxHP -= 25; regenerateMana -= 0.5; }
+	 */
+
 	private Boolean isProjInNpcX(int i, int n) {
 		boolean hit = false;
 		if (level.projectiles.get(i).x > level.npcs.get(n).hbx1 == true && level.projectiles.get(i).x < level.npcs.get(n).hbx2 == true) hit = true;
@@ -294,9 +253,9 @@ public class Player extends Mob {
 			if (hp < 0) {
 				hp = 0;
 				dead = true;
-				//whenDie(); 
-			}
+				// whenDie();
 		}
+	}
 
 	}
 

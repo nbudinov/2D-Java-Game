@@ -7,6 +7,7 @@ import elsys.A11.project10.game.entity.Entity;
 import elsys.A11.project10.game.entity.Potion;
 import elsys.A11.project10.game.entity.Projectile;
 import elsys.A11.project10.game.graphics.Sprite;
+import elsys.A11.project10.game.level.Level;
 
 public abstract class Mob extends Entity {
 	protected Sprite sprite;
@@ -116,7 +117,7 @@ public abstract class Mob extends Entity {
 		// + yDir));
 		boolean end = false;
 		if (x + xDir <= -10 || y + yDir <= -10) end = true;
-		if (x + xDir >= 127 * 16 + 10 || y + yDir >= 127 * 16 + 5) end = true;
+		if (x + xDir >= (Level.getHeight()-1) * 16 + 10 || y + yDir >= (Level.getHeight()-1) * 16 + 5) end = true;
 
 		return end;
 	}
@@ -139,5 +140,6 @@ public abstract class Mob extends Entity {
 		if (mana >= 100) mana = 100;
 
 	}
+
 
 }

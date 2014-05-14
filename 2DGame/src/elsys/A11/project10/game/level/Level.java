@@ -17,7 +17,7 @@ import elsys.A11.project10.game.level.tile.Tile;
 public class Level {
 
 	public static final Random random = new Random();
-	public static int width, height;
+	private static int width, height;
 	private int mapWidth, mapHeight;
 	public int[] tilesIn;
 	public int[] tiles;
@@ -114,11 +114,7 @@ public class Level {
 		for (int n = 0; n < npcs.size(); n++) {
 			int dx = Math.abs((int) npcs.get(n).x - px);
 			int dy = Math.abs((int) npcs.get(n).y - py);
-			// boolean test = Math.sqrt(Math.pow(Math.abs((int) npcs.get(0).x -
-			// px), 2) + Math.pow(Math.abs((int) npcs.get(0).y - py), 2)) <
-			// NPC.range;
-			// System.out.println(test);
-			//System.out.println((Math.sqrt(Math.pow(Math.abs((int) npcs.get(0).x - px), 2) + Math.pow(Math.abs((int) npcs.get(0).y - py), 2))));
+			//System.out.println(npcs.get(n).y - py);
 			if (Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2)) < NPC.range) {
 				npcs.get(n).time = 0;
 				if (npcs.get(n).x > px)
@@ -130,25 +126,35 @@ public class Level {
 					npcs.get(n).yMove = -offset;
 				else if (npcs.get(n).y < py) npcs.get(n).yMove = offset;
 				else npcs.get(n).yMove = 0;
-				
-				//if (npcs.get(n).x == px) npcs.get(n).yMove = 0; 
-				//if (npcs.get(n).y == py) npcs.get(n).xMove = 0;
 
 			} else {
 				npcs.get(n).mobRandomMovement(n);
 			}
+			npcMove(npcs.get(n), px, py);
+		}
+	}
+	private void removeProjectile(int i) {
+		if (projectiles.get(i).getxMoved() + projectiles.get(i).getyMoved() > Projectile.getRange()) projectiles.remove(i);
+	}
+	
+	public void npcMove(NPC npc, int px, int py) {
+		if (checkNpcPos(npc,px,py)) {
+			if (px - npc.x > 0)
+				npc.direction = 1;
+			else
+				npc.direction = 2;
+		} else {
+			if (py - npc.y > 0)
+				npc.direction = 3;
+			else
+				npc.direction = 4;
 		}
 	}
 
-	/*
-	 * public void mobRandomMovement(int n) { if (time == 60) { xRand = new
-	 * Random().nextInt(3) - 1; yRand = new Random().nextInt(3) - 1; time = 0; }
-	 * npcs.get(n).xMove = xRand; npcs.get(n).yMove = yRand;
-	 * 
-	 * }
-	 */
-	private void removeProjectile(int i) {
-		if (projectiles.get(i).getxMoved() + projectiles.get(i).getyMoved() > Projectile.getRange()) projectiles.remove(i);
+	public boolean checkNpcPos(NPC npc, int px, int py) {
+		if(px - npc.x>=0 && px - npc.x <=1) npc.xMove = 0;
+		if(py - npc.y>=0 && py - npc.y <=1) npc.yMove = 0;
+		return Math.abs(px - npc.x) > Math.abs(py - npc.y);
 	}
 
 	public static int getWidth() {
