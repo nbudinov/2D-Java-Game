@@ -137,7 +137,7 @@ public class Level {
 		if (projectiles.get(i).getxMoved() + projectiles.get(i).getyMoved() > Projectile.getRange()) projectiles.remove(i);
 	}
 	
-	public void npcMove(NPC npc, int px, int py) {
+	public static void npcMove(NPC npc, int px, int py) {
 		if (checkNpcPos(npc,px,py)) {
 			if (px - npc.x > 0)
 				npc.direction = 1;
@@ -151,7 +151,7 @@ public class Level {
 		}
 	}
 
-	public boolean checkNpcPos(NPC npc, int px, int py) {
+	public static boolean checkNpcPos(NPC npc, int px, int py) {
 		if(px - npc.x>=0 && px - npc.x <=1) npc.xMove = 0;
 		if(py - npc.y>=0 && py - npc.y <=1) npc.yMove = 0;
 		return Math.abs(px - npc.x) > Math.abs(py - npc.y);

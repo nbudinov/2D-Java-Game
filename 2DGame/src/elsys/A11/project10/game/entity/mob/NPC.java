@@ -4,7 +4,6 @@ import java.util.Random;
 
 import elsys.A11.project10.game.graphics.Screen;
 import elsys.A11.project10.game.graphics.Sprite;
-import elsys.A11.project10.game.level.Level;
 
 public class NPC extends Mob {
 	public double x, y;

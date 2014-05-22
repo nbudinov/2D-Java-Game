@@ -15,9 +15,9 @@ import java.awt.image.DataBufferInt;
 import javax.swing.JFrame;
 
 import elsys.A11.project10.game.entity.Projectile;
-import elsys.A11.project10.game.entity.mob.NPC;
 import elsys.A11.project10.game.entity.mob.Player;
 import elsys.A11.project10.game.graphics.Screen;
+import elsys.A11.project10.game.gui.InGameMenu;
 import elsys.A11.project10.game.input.KeyHandler;
 import elsys.A11.project10.game.input.Mouse;
 import elsys.A11.project10.game.level.Level;
@@ -29,9 +29,14 @@ public class Game extends Canvas implements Runnable {
 	private static int height = width / 16 * 9;
 	private static final int scale = 3;
 	private static final String name = "Game";
+	private static String levelName = "/NormalLevel.png";
+	private boolean isEsc = false;
+	private boolean isMenu = false;
 
 	public static int ix = 0;
 	public static int iy = 0;
+	
+	private int time = 0;
 
 	boolean running = false;
 
@@ -45,7 +50,8 @@ public class Game extends Canvas implements Runnable {
 	private Level level;
 	private Player player;
 	private Mouse mouse;
-	Container pane;
+	private InGameMenu menu;
+	private Container pane;
 
 	public synchronized void start() {
 		thread = new Thread(this, name);
@@ -53,20 +59,11 @@ public class Game extends Canvas implements Runnable {
 		running = true;
 	}
 
-	public synchronized void stop() {
-		running = false;
-		try {
-			thread.join();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
-
 	public Game() {
 		frame = new JFrame(name);
 		screen = new Screen(width, height);
 		key = new KeyHandler();
-		level = new Level("/level.png");
+		level = new Level(this.levelName);
 		mouse = new Mouse();
 		player = new Player(13 * 16, 150, key);
 		player.init(level);
@@ -112,11 +109,14 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	private void tick() {
-
 		key.tick();
 		player.tick();
 		level.tick();
 		if (key.isEsc()) System.exit(0);
+		time++;
+		if(time==61) time = 0;
+		//System.out.println(time);
+
 
 	}
 
@@ -164,8 +164,13 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	boolean cIsPressed = false;
+
 	private void displayHealth(Graphics g) {
-		if (key.isc()) cIsPressed = !cIsPressed;
+		if (key.isc()&&time>=10){
+			cIsPressed = !cIsPressed;
+			time=0;
+		}
+		//if(cIsPressed) time=0;
 		g.setFont(new Font("Verdana", 0, 10));
 
 		g.setColor(Color.RED);
@@ -182,8 +187,8 @@ public class Game extends Canvas implements Runnable {
 		g.setColor(clr);
 		g.fillRect(0, height * scale - 50, width * scale, 10);
 
-		Color clr1 = new Color(150, 0, 110);
-		g.setColor(clr1);
+		//Color clr1 = new Color(150, 0, 110);
+		g.setColor(clr);
 		g.fillRect(0, height * scale - 50, player.xp / (player.neededXP / (width * scale)), 10);
 		g.setColor(Color.WHITE);
 		g.drawString(player.xp + " / " + player.neededXP + " XP ", width * scale - ((width * scale) / 2), height * scale - 42);
@@ -270,6 +275,14 @@ public class Game extends Canvas implements Runnable {
 
 	public static int getScale() {
 		return scale;
+	}
+
+	public static String getLevelName() {
+		return levelName;
+	}
+
+	public static void setLevelName(String levelName) {
+		Game.levelName = levelName;
 	}
 
 }

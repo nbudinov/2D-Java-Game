@@ -1,6 +1,8 @@
-package elsys.A11.project10.game.launcher;
+package elsys.A11.project10.game.gui.launcher;
 
 
+import java.awt.Color;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -8,10 +10,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 import elsys.A11.project10.game.Game;
 
@@ -20,7 +20,7 @@ public class Launcher extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	protected JPanel window = new JPanel();
+	protected Container window = new Container();
 	private JButton play, options, help, exit;
 	private Rectangle rplay, roptions, rhelp, rexit;
 
@@ -31,17 +31,18 @@ public class Launcher extends JFrame {
 
 
 	public Launcher(int id) {
-
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		
+		try { 
+		    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e) {
+		    e.printStackTrace();
 		}
 
 		setTitle("Game");
 		setSize(new Dimension(width, height));
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		//setUndecorated(true);
+		getContentPane().setBackground(new Color(205,230,255));
 		getContentPane().add(window);
 		setLocationRelativeTo(null);
 		setResizable(false);
@@ -55,8 +56,9 @@ public class Launcher extends JFrame {
 	private void drawButtons() {
 		
 		createPlayButton(50);
-		createHelpButton(100);
-		createExitButton(150);
+		createOptionsButton(100);
+		createHelpButton(150);
+		createExitButton(200);
 
 		play.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -68,6 +70,14 @@ public class Launcher extends JFrame {
 			}
 		});
 
+		options.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Options options = new Options();
+				
+				dispose();
+
+			}
+		});
 		
 		help.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -83,6 +93,7 @@ public class Launcher extends JFrame {
 				System.exit(0); 
 			}
 		});
+		
 
 	}
 
