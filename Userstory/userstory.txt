@@ -1,0 +1,32 @@
+Title : Stats
+Desc : 
+	There will be some different stats
+	player: hp, mana, mana regen, walking speed
+	npcs: hp, dmg per hit, walking speed
+
+Title : Player
+Desc : 
+	- player will be able to level up 
+	- level dependently increasing stats
+	- will be able to shoot - 2 different types of attacks
+
+Title : Npcs
+Desc : 
+	There will be zombie-like npcs who will be chasing and hurt the player
+	- increasing npcs stats
+
+Title : Potions
+Desc : 
+	Some different potions radomly spawning on the map that will boost player's stats
+	
+Title : Menu
+Desc :  
+	- Main menu starting the game with different options:
+		~ play
+		~ options - chosing the difficulty of the game
+		~ help - navigates you what to do int the game
+		~ exit 
+
+Title : Maps
+Desc : 
+	Some different maps offering different ingame difficulties
